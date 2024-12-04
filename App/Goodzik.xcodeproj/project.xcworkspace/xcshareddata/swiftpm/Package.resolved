@@ -1,5 +1,5 @@
 {
-  "originHash" : "6c6b65c2312de56a194a644f0297dcc11e2d87ac49361217010d3d08d98a2e84",
+  "originHash" : "ddc0f89e96eff3e0ee1f6a2165e80d57f108600aea9e3836346941bcf9f13cf9",
   "pins" : [
     {
       "identity" : "app-check",
@@ -96,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/supabase/supabase-swift",
       "state" : {
-        "revision" : "691bde7ca02fb70eed77d4750904fc9be45bd007",
-        "version" : "2.22.1"
+        "revision" : "c470e9d821550000d28f05f2457857b8f3813f62",
+        "version" : "2.23.0"
       }
     },
     {
@@ -195,8 +195,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-dependencies",
       "state" : {
-        "revision" : "e2b06090b0b7738fcd8c762131e705d711fc7e8e",
-        "version" : "1.6.0"
+        "revision" : "5526c8a27675dc7b18d6fa643abfb64bcb200b77",
+        "version" : "1.6.2"
       }
     },
     {
