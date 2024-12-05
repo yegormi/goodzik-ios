@@ -2,34 +2,23 @@ import AppearanceClient
 import AppFeature
 import AppTrackingTransparency
 import ComposableArchitecture
-import FacebookCore
-import GoogleSignIn
 import OSLog
 import SharedModels
 import Styleguide
-import Supabase
 import SwiftUI
 
 private let logger = Logger(subsystem: "iOS", category: "App")
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    @Dependency(\.supabaseClient) var supabase
-
     @Dependency(\.appearance) var appearance
 
     func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+        _: UIApplication,
+        didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
     )
         -> Bool
     {
         Task { await self.appearance.configure() }
-
-        // Facebook SDK
-        ApplicationDelegate.shared.application(
-            application,
-            didFinishLaunchingWithOptions: launchOptions
-        )
 
         // Override apple's buggy alerts tintColor not taking effect.
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.accent
@@ -56,20 +45,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
                 }
             }
         }
-    }
-
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        let facebookHandle = ApplicationDelegate.shared.application(
-            app,
-            open: url,
-            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-            annotation: options[UIApplication.OpenURLOptionsKey.annotation]
-        )
-
-        let googleHandle = GIDSignIn.sharedInstance.handle(url)
-        let supabaseHandle = self.supabase.handle(url)
-
-        return facebookHandle || googleHandle || supabaseHandle
     }
 }
 

@@ -16,8 +16,8 @@ public struct TabsView: View {
     }
 
     private let tabs: [TabBarItem] = [
-        .init(tab: Tabs.State.Tab.guides, title: "Guides", resource: .guidesTab),
         .init(tab: Tabs.State.Tab.news, title: "News", resource: .newsTab),
+        .init(tab: Tabs.State.Tab.guides, title: "Guides", resource: .guidesTab),
         .init(tab: Tabs.State.Tab.donate, title: "Donate", resource: .donateTab),
         .init(tab: Tabs.State.Tab.account, title: "Account", resource: .accountTab),
     ]

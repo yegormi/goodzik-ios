@@ -1,10 +1,7 @@
 @preconcurrency import Combine
 import Dependencies
-import FacebookClient
-import GoogleClient
 import KeychainClient
 import SharedModels
-import SupabaseSwiftClient
 
 extension SessionClient: DependencyKey {
     public static var liveValue: SessionClient {
@@ -17,9 +14,6 @@ extension SessionClient: DependencyKey {
         let subject = PassthroughSubject<User?, Never>()
 
         @Dependency(\.keychain) var keychain
-        @Dependency(\.authGoogle) var google
-        @Dependency(\.authFacebook) var facebook
-        @Dependency(\.supabaseClient) var supabase
 
         return Self(
             authenticate: { user in
@@ -43,17 +37,12 @@ extension SessionClient: DependencyKey {
             },
             currentUser: { storage.value.currentUser },
             currentUsers: {
-                subject.values.eraseToStream()
+                UncheckedSendable(subject.values).eraseToStream()
             },
             logout: {
                 storage.withValue {
                     $0.currentAccessToken = nil
                     $0.currentUser = nil
-                }
-                Task {
-                    try? await facebook.signOut()
-                    try? await google.signOut()
-                    try? await supabase.signOut()
                 }
                 subject.send(nil)
                 try keychain.delete(.appAccessToken)

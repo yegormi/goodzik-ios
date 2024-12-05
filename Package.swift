@@ -17,17 +17,14 @@ let package = Package(
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AuthFeature", targets: ["AuthFeature"]),
         .library(name: "ChatFeature", targets: ["ChatFeature"]),
-        .library(name: "FacebookClient", targets: ["FacebookClient"]),
-        .library(name: "GoogleClient", targets: ["GoogleClient"]),
         .library(name: "GuidesFeature", targets: ["GuidesFeature"]),
-        .library(name: "NewsFeature", targets: ["NewsFeature"]),
         .library(name: "KeychainClient", targets: ["KeychainClient"]),
+        .library(name: "NewsFeature", targets: ["NewsFeature"]),
         .library(name: "SessionClient", targets: ["SessionClient"]),
         .library(name: "SettingsFeature", targets: ["SettingsFeature"]),
         .library(name: "SharedModels", targets: ["SharedModels"]),
         .library(name: "SplashFeature", targets: ["SplashFeature"]),
         .library(name: "Styleguide", targets: ["Styleguide"]),
-        .library(name: "SupabaseSwiftClient", targets: ["SupabaseSwiftClient"]),
         .library(name: "SwiftHelpers", targets: ["SwiftHelpers"]),
         .library(name: "SwiftUIHelpers", targets: ["SwiftUIHelpers"]),
         .library(name: "TabsFeature", targets: ["TabsFeature"]),
@@ -36,13 +33,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-openapi-generator", from: "1.5.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.7.0"),
         .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.2"),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "17.4.0"),
-        .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "8.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.17.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.6.2"),
         .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", from: "1.1.1"),
         .package(url: "https://github.com/pointfreeco/swift-tagged", from: "0.10.0"),
-        .package(url: "https://github.com/supabase/supabase-swift", from: "2.23.0"),
     ],
     targets: [
         .target(
@@ -132,28 +126,6 @@ let package = Package(
             ]
         ),
         .target(
-            name: "FacebookClient",
-            dependencies: [
-                "SharedModels",
-                "SwiftHelpers",
-                .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DependenciesMacros", package: "swift-dependencies"),
-                .product(name: "FacebookCore", package: "facebook-ios-sdk"),
-                .product(name: "FacebookLogin", package: "facebook-ios-sdk"),
-                .product(name: "Tagged", package: "swift-tagged"),
-            ]
-        ),
-        .target(
-            name: "GoogleClient",
-            dependencies: [
-                "SharedModels",
-                "SwiftHelpers",
-                .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DependenciesMacros", package: "swift-dependencies"),
-                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
-            ]
-        ),
-        .target(
             name: "GuidesFeature",
             dependencies: [
                 "APIClient",
@@ -191,11 +163,8 @@ let package = Package(
         .target(
             name: "SessionClient",
             dependencies: [
-                "FacebookClient",
-                "GoogleClient",
                 "KeychainClient",
                 "SharedModels",
-                "SupabaseSwiftClient",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
             ]
@@ -228,16 +197,6 @@ let package = Package(
             dependencies: [],
             resources: [
                 .process("Resources")
-            ]
-        ),
-        .target(
-            name: "SupabaseSwiftClient",
-            dependencies: [
-                "SharedModels",
-                "SwiftHelpers",
-                .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DependenciesMacros", package: "swift-dependencies"),
-                .product(name: "Supabase", package: "supabase-swift"),
             ]
         ),
         .target(

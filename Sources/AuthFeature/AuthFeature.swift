@@ -1,12 +1,6 @@
 import APIClient
 import ComposableArchitecture
-import CryptoKit
-import FacebookClient
-import FacebookCore
-import FacebookLogin
 import Foundation
-import GoogleClient
-import GoogleSignIn
 import KeychainClient
 import OSLog
 import SessionClient
@@ -174,13 +168,5 @@ extension AlertState where Action == Never {
         } message: {
             TextState(error.localizedDescription)
         }
-    }
-}
-
-extension Error {
-    var isUserCancelled: Bool {
-        if let googleError = self as? GIDSignInError, googleError.code == .canceled { return true }
-        if let fbError = self as? FacebookAuthError, fbError == .canceled { return true }
-        return false
     }
 }

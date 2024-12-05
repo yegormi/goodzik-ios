@@ -8,14 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8C596C2E2CDF997100A9E196 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C596C2D2CDF997100A9E196 /* AppTrackingTransparency.framework */; };
-		8C6F32622CDE4C6C00C0394B /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8C6F32612CDE4C6C00C0394B /* FacebookCore */; };
-		8C6F32642CDE4C6C00C0394B /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 8C6F32632CDE4C6C00C0394B /* FacebookLogin */; };
 		8C6FB2FD2CEA0D6A00A747A7 /* AppearanceClient in Frameworks */ = {isa = PBXBuildFile; productRef = 8C6FB2FC2CEA0D6A00A747A7 /* AppearanceClient */; };
 		8C6FB2FF2CEA0E0300A747A7 /* SharedModels in Frameworks */ = {isa = PBXBuildFile; productRef = 8C6FB2FE2CEA0E0300A747A7 /* SharedModels */; };
-		8C84EFB82CE11ECB00418827 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 8C84EFB72CE11ECB00418827 /* Auth */; };
 		8CA58F2B2CEA68DA00C06EFE /* APIClientLive in Frameworks */ = {isa = PBXBuildFile; productRef = 8CA58F2A2CEA68DA00C06EFE /* APIClientLive */; };
-		8CFBEFA42CDD3B6D00E15AF8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 8CFBEFA32CDD3B6D00E15AF8 /* GoogleSignIn */; };
-		8CFBEFA62CDD3B6D00E15AF8 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8CFBEFA52CDD3B6D00E15AF8 /* GoogleSignInSwift */; };
 		EEA0214B2B9E67200098989F /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = EEA0214A2B9E67200098989F /* AppFeature */; };
 		EEA0214D2B9E96BE0098989F /* Styleguide in Frameworks */ = {isa = PBXBuildFile; productRef = EEA0214C2B9E96BE0098989F /* Styleguide */; };
 /* End PBXBuildFile section */
@@ -35,16 +30,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C6F32642CDE4C6C00C0394B /* FacebookLogin in Frameworks */,
 				8C6FB2FF2CEA0E0300A747A7 /* SharedModels in Frameworks */,
-				8CFBEFA42CDD3B6D00E15AF8 /* GoogleSignIn in Frameworks */,
 				8CA58F2B2CEA68DA00C06EFE /* APIClientLive in Frameworks */,
 				8C6FB2FD2CEA0D6A00A747A7 /* AppearanceClient in Frameworks */,
 				EEA0214B2B9E67200098989F /* AppFeature in Frameworks */,
 				8C596C2E2CDF997100A9E196 /* AppTrackingTransparency.framework in Frameworks */,
-				8C6F32622CDE4C6C00C0394B /* FacebookCore in Frameworks */,
-				8CFBEFA62CDD3B6D00E15AF8 /* GoogleSignInSwift in Frameworks */,
-				8C84EFB82CE11ECB00418827 /* Auth in Frameworks */,
 				EEA0214D2B9E96BE0098989F /* Styleguide in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,11 +82,6 @@
 			packageProductDependencies = (
 				EEA0214A2B9E67200098989F /* AppFeature */,
 				EEA0214C2B9E96BE0098989F /* Styleguide */,
-				8CFBEFA32CDD3B6D00E15AF8 /* GoogleSignIn */,
-				8CFBEFA52CDD3B6D00E15AF8 /* GoogleSignInSwift */,
-				8C6F32612CDE4C6C00C0394B /* FacebookCore */,
-				8C6F32632CDE4C6C00C0394B /* FacebookLogin */,
-				8C84EFB72CE11ECB00418827 /* Auth */,
 				8C6FB2FC2CEA0D6A00A747A7 /* AppearanceClient */,
 				8C6FB2FE2CEA0E0300A747A7 /* SharedModels */,
 				8CA58F2A2CEA68DA00C06EFE /* APIClientLive */,
@@ -130,9 +115,6 @@
 			);
 			mainGroup = EEA0212E2B9E4BD00098989F;
 			packageReferences = (
-				8CFBEFA22CDD3B6D00E15AF8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-				8C6F32602CDE4C6C00C0394B /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
-				8C84EFB62CE11ECB00418827 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			productRefGroup = EEA0212E2B9E4BD00098989F;
 			projectDirPath = "";
@@ -372,44 +354,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		8C6F32602CDE4C6C00C0394B /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 17.4.0;
-			};
-		};
-		8C84EFB62CE11ECB00418827 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase/supabase-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.21.0;
-			};
-		};
-		8CFBEFA22CDD3B6D00E15AF8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		8C6F32612CDE4C6C00C0394B /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8C6F32602CDE4C6C00C0394B /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
-		};
-		8C6F32632CDE4C6C00C0394B /* FacebookLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8C6F32602CDE4C6C00C0394B /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookLogin;
-		};
 		8C6FB2FC2CEA0D6A00A747A7 /* AppearanceClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppearanceClient;
@@ -418,24 +363,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedModels;
 		};
-		8C84EFB72CE11ECB00418827 /* Auth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8C84EFB62CE11ECB00418827 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Auth;
-		};
 		8CA58F2A2CEA68DA00C06EFE /* APIClientLive */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = APIClientLive;
-		};
-		8CFBEFA32CDD3B6D00E15AF8 /* GoogleSignIn */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8CFBEFA22CDD3B6D00E15AF8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignIn;
-		};
-		8CFBEFA52CDD3B6D00E15AF8 /* GoogleSignInSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8CFBEFA22CDD3B6D00E15AF8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignInSwift;
 		};
 		EEA0214A2B9E67200098989F /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -17,8 +17,8 @@ public struct Tabs: Reducer {
         public init() {}
 
         public enum Tab: Equatable {
-            case guides
             case news
+            case guides
             case account
             case donate
         }

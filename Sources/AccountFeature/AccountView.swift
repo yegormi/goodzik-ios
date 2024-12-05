@@ -59,19 +59,19 @@ public struct AccountView: View {
         .onAppear {
             send(.onAppear)
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    send(.settingsButtonTapped)
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                        .resizable()
-                        .frame(width: 22, height: 22)
-                        .padding(13)
-                        .clipShape(Circle())
-                }
-            }
-        }
+//        .toolbar {
+//            ToolbarItem(placement: .topBarTrailing) {
+//                Button {
+//                    send(.settingsButtonTapped)
+//                } label: {
+//                    Image(systemName: "gearshape.fill")
+//                        .resizable()
+//                        .frame(width: 22, height: 22)
+//                        .padding(13)
+//                        .clipShape(Circle())
+//                }
+//            }
+//        }
         .navigationDestination(
             item: self.$store.scope(state: \.destination?.settings, action: \.destination.settings)
         ) { store in
