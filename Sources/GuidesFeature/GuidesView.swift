@@ -13,8 +13,6 @@ public struct GuidesView: View {
         self.store = store
     }
 
-    @Environment(\.tabBarState) var tabBarState
-
     public var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -35,6 +33,7 @@ public struct GuidesView: View {
             GuideDetailView(store: store)
                 .navigationTitle("Details")
                 .navigationBarTitleDisplayMode(.inline)
+                .hideTabBar()
         }
         .onFirstAppear {
             send(.onFirstAppear)

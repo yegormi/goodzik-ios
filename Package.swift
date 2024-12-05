@@ -248,6 +248,7 @@ let package = Package(
             name: "SwiftUIHelpers",
             dependencies: [
                 "Styleguide",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: [
                 .process("Resources")

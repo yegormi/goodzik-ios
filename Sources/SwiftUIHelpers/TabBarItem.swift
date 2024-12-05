@@ -1,3 +1,4 @@
+import ComposableArchitecture
 import SwiftUI
 import SwiftUIHelpers
 
@@ -42,8 +43,9 @@ public struct CustomTabBar<Tab: Hashable>: View {
                     item: item,
                     isSelected: self.selectedTab as AnyHashable == item.tab,
                     namespace: self.namespace
-                )
-                    { self.onSelect(item.tab as! Tab) }
+                ) {
+                    self.onSelect(item.tab as! Tab)
+                }
             }
         }
         .padding(5)
@@ -87,30 +89,12 @@ private struct TabBarButton: View {
     }
 }
 
-public extension EnvironmentValues {
-    @Entry var tabBarState: TabBarState = .init(isHidden: false)
-}
-
-public extension View {
-    func hideTabBar(_ hidden: Bool = true) -> some View {
-        environment(\.tabBarState.isHidden, hidden)
-    }
-}
-
-@Observable
-public final class TabBarState {
-    public var isHidden: Bool
-
-    public init(isHidden: Bool) {
-        self.isHidden = isHidden
-    }
-}
-
 public struct CustomTabViewContainer<Tab: Hashable, Content: View>: View {
     let tabs: [TabBarItem]
     @Binding var selectedTab: Tab
     let content: () -> Content
-    @Environment(\.tabBarState) private var tabBarState
+
+    @Shared(.isTabBarHidden) var isHidden = false
 
     public init(
         tabs: [TabBarItem],
@@ -136,9 +120,17 @@ public struct CustomTabViewContainer<Tab: Hashable, Content: View>: View {
             }
             .padding(.horizontal)
             .safeAreaPadding(.bottom, 30)
-            .opacity(self.tabBarState.isHidden ? 0 : 1)
-            .animation(.spring(response: 0.3), value: self.tabBarState.isHidden)
+            .opacity(self.isHidden ? 0 : 1)
+            .offset(y: self.isHidden ? 100 : 0)
         }
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: self.isHidden)
         .ignoresSafeArea(edges: .bottom)
+    }
+}
+
+public extension SharedReaderKey where Self == InMemoryKey<Bool> {
+    /// A shared key for tracking whether the tab bar is hidden.
+    static var isTabBarHidden: InMemoryKey<Bool> {
+        .inMemory("isTabBarHidden")
     }
 }
