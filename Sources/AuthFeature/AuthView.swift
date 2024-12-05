@@ -36,7 +36,7 @@ public struct AuthView: View {
                             .textFieldStyle(.auth)
                             .textContentType(.name)
                     }
-                    
+
                     TextField("Email", text: self.$store.email)
                         .textFieldStyle(.auth)
                         .textContentType(.emailAddress)

@@ -29,7 +29,7 @@ extension APIClient: DependencyKey {
                 LoggingMiddleware(bodyLoggingConfiguration: .upTo(maxBytes: 1024)),
             ]
         )
-        
+
         return Self(
             signup: { request in
                 try await throwingUnderlyingError {

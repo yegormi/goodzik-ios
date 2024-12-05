@@ -43,7 +43,7 @@ public struct CustomTabBar<Tab: Hashable>: View {
                     isSelected: self.selectedTab as AnyHashable == item.tab,
                     namespace: self.namespace
                 )
-                { self.onSelect(item.tab as! Tab) }
+                    { self.onSelect(item.tab as! Tab) }
             }
         }
         .padding(5)

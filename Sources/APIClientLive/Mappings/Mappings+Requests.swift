@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  goodzik-ios
-//
-//  Created by Yehor Myropoltsev on 05.12.2024.
-//
-
 import APIClient
 import Foundation
 

@@ -76,6 +76,7 @@ public struct AppReducer: Reducer, Sendable {
                     }
 
                     // MARK: - Testing
+
 //                    await send(.changeToDestination(.tabs(Tabs.State())))
 
                     // Logout

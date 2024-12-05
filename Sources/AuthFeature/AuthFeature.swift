@@ -28,14 +28,14 @@ public struct AuthFeature: Reducer, Sendable {
         var confirmPassword = ""
         var isLoading = false
         @Presents var destination: Destination.State?
-        
+
         var isFormValid: Bool {
             switch self.authType {
             case .signIn:
                 self.email.isValidEmail && !self.password.isEmpty
             case .signUp:
                 !self.username.isEmpty && self.email.isValidEmail &&
-                !self.password.isEmpty && self.password == self.confirmPassword
+                    !self.password.isEmpty && self.password == self.confirmPassword
             }
         }
     }

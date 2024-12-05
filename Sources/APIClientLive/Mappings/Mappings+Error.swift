@@ -11,15 +11,15 @@ extension Components.Schemas.ApiErrorDto.codePayload {
     func toDomain() -> APIErrorPayload.Code {
         switch self {
         case ._internal:
-                .internalError
+            .internalError
         case .entity_hyphen_not_hyphen_found:
-                .entityNotFound
+            .entityNotFound
         case .email_hyphen_not_hyphen_unique:
-                .emailNotUnique
+            .emailNotUnique
         case .unauthorized:
-                .unauthorized
+            .unauthorized
         case .forbidden:
-                .forbidden
+            .forbidden
         }
     }
 }

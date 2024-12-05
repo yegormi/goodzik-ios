@@ -34,17 +34,17 @@ public struct AccountView: View {
                         title: "Chats history",
                         image: .chat,
                         tint: .primary
-                    )                        { /* action */ }
+                    ) { /* action */ }
                     MenuButton(
                         title: "About us",
                         image: .aboutUs,
                         tint: .primary
-                    )                        { /* action */ }
+                    ) { /* action */ }
                     MenuButton(
                         title: "Logout",
                         image: .logout,
                         tint: .red500
-                    )                        { /* action */ }
+                    ) { /* action */ }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
