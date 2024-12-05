@@ -56,6 +56,7 @@ public struct NewsDetailView: View {
         .onAppear {
             send(.onAppear)
         }
+        .hideTabBar()
     }
     
     private var categoriesView: some View {

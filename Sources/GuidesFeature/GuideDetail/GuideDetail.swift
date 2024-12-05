@@ -8,6 +8,7 @@ public struct GuideDetail: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
         var guide: Guide
+        var isNextButtonVisible = true
         
         public init(guide: Guide) {
             self.guide = guide
@@ -19,14 +20,20 @@ public struct GuideDetail: Reducer, Sendable {
         case `internal`(Internal)
         case view(View)
 
-        public enum Delegate {}
+        public enum Delegate {
+            case nextButtonTapped
+        }
 
-        public enum Internal {}
+        public enum Internal {
+            case handleScroll(CGFloat)
+        }
 
         public enum View: BindableAction {
             case binding(BindingAction<GuideDetail.State>)
             case onFirstAppear
             case onAppear
+            case nextButtonTapped
+            case handleScroll(CGFloat)
         }
     }
 
@@ -43,7 +50,8 @@ public struct GuideDetail: Reducer, Sendable {
             case .delegate:
                 return .none
 
-            case .internal:
+            case let .internal(.handleScroll(offset)):
+                state.isNextButtonVisible = offset < 100
                 return .none
 
             case .view(.binding):
@@ -54,6 +62,12 @@ public struct GuideDetail: Reducer, Sendable {
 
             case .view(.onAppear):
                 return .none
+                
+            case .view(.nextButtonTapped):
+                return .send(.delegate(.nextButtonTapped))
+                
+            case let .view(.handleScroll(offset)):
+                return .send(.internal(.handleScroll(offset)))
             }
         }
     }

@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUIHelpers
 
 // MARK: - Models
 public struct TabBarItem: Identifiable {
@@ -82,11 +83,30 @@ private struct TabBarButton: View {
     }
 }
 
-// MARK: - Tab View Container
+public extension EnvironmentValues {
+    @Entry var tabBarState: TabBarState = .init(isHidden: false)
+}
+
+public extension View {
+    func hideTabBar(_ hidden: Bool = true) -> some View {
+        environment(\.tabBarState.isHidden, hidden)
+    }
+}
+
+@Observable
+public final class TabBarState {
+    public var isHidden: Bool
+    
+    public init(isHidden: Bool) {
+        self.isHidden = isHidden
+    }
+}
+
 public struct CustomTabViewContainer<Tab: Hashable, Content: View>: View {
     let tabs: [TabBarItem]
     @Binding var selectedTab: Tab
     let content: () -> Content
+    @Environment(\.tabBarState) private var tabBarState
     
     public init(
         tabs: [TabBarItem],
@@ -105,17 +125,15 @@ public struct CustomTabViewContainer<Tab: Hashable, Content: View>: View {
                     .toolbar(.hidden, for: .tabBar)
             }
             
-            CustomTabBar(
-                items: tabs,
-                selectedTab: selectedTab,
-                onSelect: { newTab in
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                        selectedTab = newTab
-                    }
+            CustomTabBar(items: tabs, selectedTab: selectedTab) { newTab in
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                    selectedTab = newTab
                 }
-            )
+            }
             .padding(.horizontal)
             .safeAreaPadding(.bottom, 30)
+            .opacity(tabBarState.isHidden ? 0 : 1)
+            .animation(.spring(response: 0.3), value: tabBarState.isHidden)
         }
         .ignoresSafeArea(edges: .bottom)
     }

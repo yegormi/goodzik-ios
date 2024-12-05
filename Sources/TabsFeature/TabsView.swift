@@ -5,6 +5,7 @@ import NewsFeature
 import Styleguide
 import SwiftHelpers
 import SwiftUI
+import SwiftUIHelpers
 
 @ViewAction(for: Tabs.self)
 public struct TabsView: View {

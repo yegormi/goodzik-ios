@@ -47,6 +47,7 @@ public struct NewsItemCardView: View {
             .padding(.bottom, 10)
             
             Text(item.description)
+                .lineLimit(3)
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)

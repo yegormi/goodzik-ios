@@ -21,6 +21,7 @@ public struct GuideCardView: View {
             }
             
             Text(self.guide.description)
+                .lineLimit(3)
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)

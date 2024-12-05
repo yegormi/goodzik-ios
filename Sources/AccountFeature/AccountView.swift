@@ -12,38 +12,52 @@ public struct AccountView: View {
 
     public init(store: StoreOf<Account>) {
         self.store = store
-
-        // Sets the background color of the Picker
-        UISegmentedControl.appearance().backgroundColor = UIColor(Color.neutral900).withAlphaComponent(0.1)
-        // Disappears the divider
-        UISegmentedControl.appearance().setDividerImage(
-            UIImage(),
-            forLeftSegmentState: .normal,
-            rightSegmentState: .normal,
-            barMetrics: .default
-        )
-        // Changes the color for the selected item
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.orangePrimary)
-        // Changes the text color for the selected item
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
     }
 
     public var body: some View {
         ScrollView {
-            VStack(spacing: 30) {
-                self.avatarCell(for: self.store.user)
-
-                Picker("Sections", selection: self.$store.tab) {
-                    ForEach(Account.State.Tab.allCases, id: \.self) { tab in
-                        Text(tab.title).tag(tab)
-                    }
+            VStack(spacing: 20) {
+                VStack(spacing: 6) {
+                    Text("Username")
+                        .font(.system(size: 26, weight: .semibold))
+                        .foregroundStyle(Color.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("mail@gmail.com")
+                        .font(.system(size: 14, weight: .semibold))
+                        .tint(Color.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .pickerStyle(.segmented)
-
-                self.contentView(for: self.store.tab)
+                
+                VStack(spacing: 16) {
+                    MenuButton(
+                        title: "Chats history",
+                        image: .chat,
+                        tint: .primary,
+                        action: { /* action */ }
+                    )
+                    MenuButton(
+                        title: "About us",
+                        image: .aboutUs,
+                        tint: .primary,
+                        action: { /* action */ }
+                    )
+                    MenuButton(
+                        title: "Logout",
+                        image: .logout,
+                        tint: .red500,
+                        action: { /* action */ }
+                    )
+                }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color(UIColor.systemBackground))
+                    .shadow(color: Color.black.opacity(0.1), radius: 8, y: 5)
+            )
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentMargins(.all, 16, for: .scrollContent)
         .onAppear {
             send(.onAppear)

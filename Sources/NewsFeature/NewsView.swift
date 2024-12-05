@@ -7,7 +7,7 @@ import SwiftUIHelpers
 @ViewAction(for: News.self)
 public struct NewsView: View {
     @Bindable public var store: StoreOf<News>
-    
+        
     public init(store: StoreOf<News>) {
         self.store = store
     }
@@ -35,8 +35,7 @@ public struct NewsView: View {
             NewsDetailView(store: store)
                 .navigationTitle("News Details")
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar(.hidden, for: .tabBar)
-                .toolbarRole(.editor)
+                .hideTabBar()
         }
         .onAppear {
             send(.onAppear)

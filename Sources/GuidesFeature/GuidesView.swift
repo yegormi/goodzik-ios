@@ -12,6 +12,8 @@ public struct GuidesView: View {
     public init(store: StoreOf<Guides>) {
         self.store = store
     }
+    
+    @Environment(\.tabBarState) var tabBarState
 
     public var body: some View {
         ScrollView {
@@ -33,8 +35,6 @@ public struct GuidesView: View {
             GuideDetailView(store: store)
                 .navigationTitle("Details")
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar(.hidden, for: .tabBar)
-                .toolbarRole(.editor)
         }
         .onFirstAppear {
             send(.onFirstAppear)
