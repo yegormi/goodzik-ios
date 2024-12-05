@@ -8,37 +8,37 @@ import SwiftUIHelpers
 @ViewAction(for: GuideDetail.self)
 public struct GuideDetailView: View {
     @Bindable public var store: StoreOf<GuideDetail>
-    
+
     public init(store: StoreOf<GuideDetail>) {
         self.store = store
     }
-    
+
     public var body: some View {
         ScrollView {
             ScrollViewReader { proxy in
                 VStack(spacing: 24) {
-                    imageView
-                    
+                    self.imageView
+
                     VStack(spacing: 12) {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("Author")
                                 .font(.system(size: 14))
                                 .foregroundStyle(.secondary)
-                            
+
                             Text(self.store.guide.title)
                                 .font(.system(size: 18, weight: .semibold))
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         Divider()
-                        
+
                         Text(self.store.guide.description)
                             .font(.system(size: 16))
                             .foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .multilineTextAlignment(.leading)
                     }
-                    
+
                     Spacer(minLength: 100)
                 }
                 .background(
@@ -82,7 +82,7 @@ public struct GuideDetailView: View {
             send(.onAppear)
         }
     }
-    
+
     private var imageView: some View {
         RoundedRectangle(cornerRadius: 20)
             .aspectRatio(contentMode: .fill)
@@ -101,7 +101,7 @@ public struct GuideDetailView: View {
 
 private struct ScrollOffsetPreferenceKey: @preconcurrency PreferenceKey {
     @MainActor static var defaultValue: CGFloat = 0
-    
+
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }

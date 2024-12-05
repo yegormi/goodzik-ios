@@ -22,32 +22,29 @@ public struct AccountView: View {
                         .font(.system(size: 26, weight: .semibold))
                         .foregroundStyle(Color.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     Text("mail@gmail.com")
                         .font(.system(size: 14, weight: .semibold))
                         .tint(Color.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                
+
                 VStack(spacing: 16) {
                     MenuButton(
                         title: "Chats history",
                         image: .chat,
-                        tint: .primary,
-                        action: { /* action */ }
-                    )
+                        tint: .primary
+                    )                        { /* action */ }
                     MenuButton(
                         title: "About us",
                         image: .aboutUs,
-                        tint: .primary,
-                        action: { /* action */ }
-                    )
+                        tint: .primary
+                    )                        { /* action */ }
                     MenuButton(
                         title: "Logout",
                         image: .logout,
-                        tint: .red500,
-                        action: { /* action */ }
-                    )
+                        tint: .red500
+                    )                        { /* action */ }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

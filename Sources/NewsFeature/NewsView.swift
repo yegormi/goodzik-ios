@@ -7,11 +7,11 @@ import SwiftUIHelpers
 @ViewAction(for: News.self)
 public struct NewsView: View {
     @Bindable public var store: StoreOf<News>
-        
+
     public init(store: StoreOf<News>) {
         self.store = store
     }
-    
+
     public var body: some View {
         ScrollView {
             VStack(spacing: 20) {

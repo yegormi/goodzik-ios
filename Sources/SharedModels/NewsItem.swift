@@ -11,7 +11,7 @@ public struct NewsItem: Equatable, Identifiable {
     public let description: String
     public let categories: [Category]
     public let imageURL: URL?
-    
+
     public init(
         id: UUID = UUID(),
         title: String,

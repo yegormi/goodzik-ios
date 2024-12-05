@@ -9,7 +9,7 @@ public struct GuideDetail: Reducer, Sendable {
     public struct State: Equatable {
         var guide: Guide
         var isNextButtonVisible = true
-        
+
         public init(guide: Guide) {
             self.guide = guide
         }
@@ -62,10 +62,10 @@ public struct GuideDetail: Reducer, Sendable {
 
             case .view(.onAppear):
                 return .none
-                
+
             case .view(.nextButtonTapped):
                 return .send(.delegate(.nextButtonTapped))
-                
+
             case let .view(.handleScroll(offset)):
                 return .send(.internal(.handleScroll(offset)))
             }

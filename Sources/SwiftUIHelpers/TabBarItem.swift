@@ -2,12 +2,13 @@ import SwiftUI
 import SwiftUIHelpers
 
 // MARK: - Models
+
 public struct TabBarItem: Identifiable {
     public let id = UUID()
     let tab: AnyHashable
     let title: String
     let image: Image
-    
+
     public init(tab: AnyHashable, title: String, resource: ImageResource) {
         self.tab = tab
         self.title = title
@@ -16,13 +17,14 @@ public struct TabBarItem: Identifiable {
 }
 
 // MARK: - Custom Tab Bar View
+
 public struct CustomTabBar<Tab: Hashable>: View {
     let items: [TabBarItem]
     let selectedTab: Tab
     let onSelect: (Tab) -> Void
-    
+
     @Namespace private var namespace
-    
+
     public init(
         items: [TabBarItem],
         selectedTab: Tab,
@@ -32,16 +34,15 @@ public struct CustomTabBar<Tab: Hashable>: View {
         self.selectedTab = selectedTab
         self.onSelect = onSelect
     }
-    
+
     public var body: some View {
         HStack(spacing: 0) {
-            ForEach(items) { item in
+            ForEach(self.items) { item in
                 TabBarButton(
                     item: item,
-                    isSelected: selectedTab as AnyHashable == item.tab,
-                    namespace: namespace,
-                    onTap: { onSelect(item.tab as! Tab) }
-                )
+                    isSelected: self.selectedTab as AnyHashable == item.tab,
+                    namespace: self.namespace
+                )                    { self.onSelect(item.tab as! Tab) }
             }
         }
         .padding(5)
@@ -54,28 +55,29 @@ public struct CustomTabBar<Tab: Hashable>: View {
 }
 
 // MARK: - Tab Bar Button
+
 private struct TabBarButton: View {
     let item: TabBarItem
     let isSelected: Bool
     let namespace: Namespace.ID
     let onTap: () -> Void
-    
+
     var body: some View {
-        Button(action: onTap) {
+        Button(action: self.onTap) {
             ZStack {
-                if isSelected {
+                if self.isSelected {
                     Circle()
                         .fill(.black)
-                        .matchedGeometryEffect(id: "background_circle", in: namespace)
+                        .matchedGeometryEffect(id: "background_circle", in: self.namespace)
                         .frame(width: 50, height: 50)
                 }
-                
-                item.image
+
+                self.item.image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .foregroundColor(isSelected ? .white : .black)
-                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+                    .foregroundColor(self.isSelected ? .white : .black)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: self.isSelected)
             }
             .frame(width: 50, height: 50)
         }
@@ -96,7 +98,7 @@ public extension View {
 @Observable
 public final class TabBarState {
     public var isHidden: Bool
-    
+
     public init(isHidden: Bool) {
         self.isHidden = isHidden
     }
@@ -107,7 +109,7 @@ public struct CustomTabViewContainer<Tab: Hashable, Content: View>: View {
     @Binding var selectedTab: Tab
     let content: () -> Content
     @Environment(\.tabBarState) private var tabBarState
-    
+
     public init(
         tabs: [TabBarItem],
         selectedTab: Binding<Tab>,
@@ -117,23 +119,23 @@ public struct CustomTabViewContainer<Tab: Hashable, Content: View>: View {
         self._selectedTab = selectedTab
         self.content = content
     }
-    
+
     public var body: some View {
         ZStack(alignment: .bottom) {
-            TabView(selection: $selectedTab) {
+            TabView(selection: self.$selectedTab) {
                 self.content()
                     .toolbar(.hidden, for: .tabBar)
             }
-            
-            CustomTabBar(items: tabs, selectedTab: selectedTab) { newTab in
+
+            CustomTabBar(items: self.tabs, selectedTab: self.selectedTab) { newTab in
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                    selectedTab = newTab
+                    self.selectedTab = newTab
                 }
             }
             .padding(.horizontal)
             .safeAreaPadding(.bottom, 30)
-            .opacity(tabBarState.isHidden ? 0 : 1)
-            .animation(.spring(response: 0.3), value: tabBarState.isHidden)
+            .opacity(self.tabBarState.isHidden ? 0 : 1)
+            .animation(.spring(response: 0.3), value: self.tabBarState.isHidden)
         }
         .ignoresSafeArea(edges: .bottom)
     }

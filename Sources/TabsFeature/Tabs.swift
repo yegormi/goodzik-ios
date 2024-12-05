@@ -72,7 +72,7 @@ public struct Tabs: Reducer {
 
             case .account:
                 return .none
-                
+
             case let .view(.tabSelected(tab)):
                 state.tab = tab
                 return .none

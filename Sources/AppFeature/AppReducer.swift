@@ -74,8 +74,9 @@ public struct AppReducer: Reducer, Sendable {
                         await send(.changeToDestination(.auth(AuthFeature.State())))
                         try self.session.logout()
                     }
-                    
+
                     // MARK: - Testing
+
                     await send(.changeToDestination(.tabs(Tabs.State())))
 
                     // Logout

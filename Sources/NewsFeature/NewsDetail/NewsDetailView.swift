@@ -1,11 +1,3 @@
-//
-//  NewsDetailView.swift
-//  goodzik-ios
-//
-//  Created by Yehor Myropoltsev on 05.12.2024.
-//
-
-
 import ComposableArchitecture
 import Foundation
 import Styleguide
@@ -15,11 +7,11 @@ import SwiftUIHelpers
 @ViewAction(for: NewsDetail.self)
 public struct NewsDetailView: View {
     @Bindable public var store: StoreOf<NewsDetail>
-    
+
     public init(store: StoreOf<NewsDetail>) {
         self.store = store
     }
-    
+
     public var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -34,22 +26,22 @@ public struct NewsDetailView: View {
                     .frame(height: 200)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
-                
+
                 Text(self.store.item.title)
                     .font(.system(size: 24, weight: .bold))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 Text(self.store.item.date.formatted())
                     .font(.system(size: 14, weight: .medium))
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 Text(self.store.item.description)
                     .font(.system(size: 16))
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                categoriesView
+
+                self.categoriesView
             }
             .padding(20)
         }
@@ -58,7 +50,7 @@ public struct NewsDetailView: View {
         }
         .hideTabBar()
     }
-    
+
     private var categoriesView: some View {
         HStack(spacing: 8) {
             ForEach(self.store.item.categories) { category in

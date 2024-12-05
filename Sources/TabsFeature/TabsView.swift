@@ -10,20 +10,20 @@ import SwiftUIHelpers
 @ViewAction(for: Tabs.self)
 public struct TabsView: View {
     @Bindable public var store: StoreOf<Tabs>
-    
+
     public init(store: StoreOf<Tabs>) {
         self.store = store
     }
-    
+
     private let tabs: [TabBarItem] = [
         .init(tab: Tabs.State.Tab.guides, title: "Guides", resource: .guidesTab),
         .init(tab: Tabs.State.Tab.news, title: "News", resource: .newsTab),
         .init(tab: Tabs.State.Tab.donate, title: "Donate", resource: .donateTab),
-        .init(tab: Tabs.State.Tab.account, title: "Account", resource: .accountTab)
+        .init(tab: Tabs.State.Tab.account, title: "Account", resource: .accountTab),
     ]
-    
+
     public var body: some View {
-        CustomTabViewContainer(tabs: tabs, selectedTab: self.$store.tab) {
+        CustomTabViewContainer(tabs: self.tabs, selectedTab: self.$store.tab) {
             NavigationStack {
                 GuidesView(
                     store: self.store.scope(state: \.guides, action: \.guides)
@@ -33,7 +33,7 @@ public struct TabsView: View {
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
             .tag(Tabs.State.Tab.guides)
-            
+
             NavigationStack {
                 NewsView(
                     store: self.store.scope(state: \.news, action: \.news)
@@ -43,7 +43,7 @@ public struct TabsView: View {
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
             .tag(Tabs.State.Tab.news)
-            
+
             NavigationStack {
                 AccountView(
                     store: self.store.scope(state: \.account, action: \.account)
@@ -53,7 +53,7 @@ public struct TabsView: View {
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
             .tag(Tabs.State.Tab.account)
-            
+
             NavigationStack {
                 DonateView(
                     store: self.store.scope(state: \.donate, action: \.donate)

@@ -1,21 +1,14 @@
-//
-//  NewsItemCardView.swift
-//  goodzik-ios
-//
-//  Created by Yehor Myropoltsev on 05.12.2024.
-//
-
+import SharedModels
 import SwiftUI
 import SwiftUIHelpers
-import SharedModels
 
 public struct NewsItemCardView: View {
     public let item: NewsItem
-    
+
     public init(item: NewsItem) {
         self.item = item
     }
-    
+
     public var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
@@ -32,28 +25,28 @@ public struct NewsItemCardView: View {
                 } else {
                     Image(.newsIcon)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(item.title)
+                    Text(self.item.title)
                         .font(.system(size: 18, weight: .semibold))
-                    
-                    Text(item.date.formatted(date: .numeric, time: .omitted))
+
+                    Text(self.item.date.formatted(date: .numeric, time: .omitted))
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                 }
-                
+
                 Spacer()
             }
             .padding(.bottom, 10)
-            
-            Text(item.description)
+
+            Text(self.item.description)
                 .lineLimit(3)
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom, 8)
-            
-            categoriesView
+
+            self.categoriesView
         }
         .padding(12)
         .background(
@@ -62,10 +55,10 @@ public struct NewsItemCardView: View {
                 .shadow(color: .black.opacity(0.1), radius: 8, y: 5)
         )
     }
-    
+
     private var categoriesView: some View {
         HStack(spacing: 8) {
-            ForEach(item.categories) { category in
+            ForEach(self.item.categories) { category in
                 Text(category.name)
                     .font(.system(size: 11))
                     .foregroundStyle(Color.green500)

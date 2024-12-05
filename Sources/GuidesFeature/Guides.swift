@@ -8,9 +8,9 @@ public struct Guides: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
         @Presents var destination: Destination.State?
-        
+
         var guides: [Guide]
-        
+
         public init() {
             self.guides = [.underwear, .socks]
         }
@@ -33,7 +33,7 @@ public struct Guides: Reducer, Sendable {
             case guideTapped(Guide)
         }
     }
-    
+
     @Reducer(state: .equatable)
     public enum Destination {
         case guideDetail(GuideDetail)
@@ -52,7 +52,7 @@ public struct Guides: Reducer, Sendable {
             switch action {
             case .delegate:
                 return .none
-                
+
             case .destination:
                 return .none
 
@@ -67,7 +67,7 @@ public struct Guides: Reducer, Sendable {
 
             case .view(.onAppear):
                 return .none
-                
+
             case let .view(.guideTapped(guide)):
                 state.destination = .guideDetail(GuideDetail.State(guide: guide))
 

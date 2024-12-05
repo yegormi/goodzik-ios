@@ -12,7 +12,7 @@ public struct GuidesView: View {
     public init(store: StoreOf<Guides>) {
         self.store = store
     }
-    
+
     @Environment(\.tabBarState) var tabBarState
 
     public var body: some View {

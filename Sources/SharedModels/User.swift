@@ -2,28 +2,30 @@ import Foundation
 
 public struct User: Codable, Sendable, Equatable {
     public let id: String
-    public let email: String?
-    public let fullName: String?
-    public let phoneNumber: String?
-    public let photoURL: URL?
+    public let username: String
+    public let email: String
+    public let role: String
 
     public init(
         id: String,
-        email: String? = nil,
-        fullName: String? = nil,
-        phoneNumber: String? = nil,
-        photoURL: URL? = nil
+        username: String,
+        email: String,
+        role: String
     ) {
         self.id = id
+        self.username = username
         self.email = email
-        self.fullName = fullName
-        self.phoneNumber = phoneNumber
-        self.photoURL = photoURL
+        self.role = role
     }
 }
 
 public extension User {
     static var mock: Self {
-        User(id: "mock")
+        User(
+            id: "1",
+            username: "Mock user",
+            email: "mock@gmail.com",
+            role: "user"
+        )
     }
 }
