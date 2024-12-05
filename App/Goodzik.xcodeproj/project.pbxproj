@@ -22,7 +22,7 @@
 
 /* Begin PBXFileReference section */
 		8C596C2D2CDF997100A9E196 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
-		8C6A65002CD93652004F42E5 /* Goodzik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goodzik.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C6A65002CD93652004F42E5 /* Goodzik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Goodzik.app; path = "/Users/yehormy/Developer/goodzik-ios/App/build/Debug-iphoneos/Goodzik.app"; sourceTree = "<absolute>"; };
 		8C7BE9BF2CDD3AC30043EF98 /* Goodzik-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Goodzik-Info.plist"; sourceTree = "<group>"; };
 		EEA021482B9E4C210098989F /* goodzik-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "goodzik-ios"; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,7 +60,6 @@
 				EEA021482B9E4C210098989F /* goodzik-ios */,
 				8C6A64E42CD934CE004F42E5 /* iOS */,
 				EEA021492B9E67200098989F /* Frameworks */,
-				8C6A65002CD93652004F42E5 /* Goodzik.app */,
 			);
 			sourceTree = "<group>";
 		};
