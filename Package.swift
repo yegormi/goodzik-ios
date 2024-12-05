@@ -16,6 +16,7 @@ let package = Package(
         .library(name: "AppearanceClient", targets: ["AppearanceClient"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AuthFeature", targets: ["AuthFeature"]),
+        .library(name: "ChatFeature", targets: ["ChatFeature"]),
         .library(name: "FacebookClient", targets: ["FacebookClient"]),
         .library(name: "GoogleClient", targets: ["GoogleClient"]),
         .library(name: "GuidesFeature", targets: ["GuidesFeature"]),
@@ -108,6 +109,21 @@ let package = Package(
                 "SharedModels",
                 "Styleguide",
                 "SwiftHelpers",
+                "SwiftUIHelpers",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        .target(
+            name: "ChatFeature",
+            dependencies: [
+                "APIClient",
+                "SessionClient",
+                "SettingsFeature",
+                "SharedModels",
+                "Styleguide",
                 "SwiftUIHelpers",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],

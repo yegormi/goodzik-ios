@@ -29,10 +29,9 @@ public struct ChatView: View {
                             .id(message.id)
                         }
                     }
-                    .padding(.horizontal, 20)
                 }
-                .onChange(of: self.store.messages) { _, newValue in
-                    guard let lastMessageId = newValue.last?.id else { return }
+                .onChange(of: self.store.messages) { _, newMessages in
+                    guard let lastMessageId = newMessages.last?.id else { return }
                     withAnimation {
                         proxy.scrollTo(lastMessageId, anchor: .bottom)
                     }
@@ -41,6 +40,7 @@ public struct ChatView: View {
 
             self.inputView
         }
+        .padding(20)
         .background(Color.tabBackground)
     }
 
@@ -49,25 +49,24 @@ public struct ChatView: View {
             TextField("Write a message...", text: self.$store.messageText, axis: .vertical)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .background(Color(uiColor: .systemBackground))
+                .background(Color(uiColor: .systemGroupedBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .focused(self.$isFocused)
 
             Button {
                 send(.sendMessage)
             } label: {
-                Image(systemName: "arrow.up")
-                    .font(.system(size: 24, weight: .medium))
-                    .foregroundStyle(.white)
-                    .frame(width: 48, height: 48)
-                    .background(Color.accentColor)
+                Image(.send)
+                    .padding(5)
+                    .background(
+                        Circle()
+                            .fill(Color.messageOutgoing)
+                    )
                     .clipShape(Circle())
             }
             .disabled(self.store.messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
-        .background(Color(uiColor: .systemGroupedBackground))
+        .padding(.vertical, 8)
     }
 }
 
