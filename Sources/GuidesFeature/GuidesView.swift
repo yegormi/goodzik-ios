@@ -17,11 +17,25 @@ public struct GuidesView: View {
         ScrollView {
             VStack(spacing: 20) {
                 ForEach(self.store.guides) { guide in
-                    GuideCardView(guide: guide)
+                    Button {
+                        send(.guideTapped(guide))
+                    } label: {
+                        GuideCardView(guide: guide)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
         .contentMargins(.all, 20, for: .scrollContent)
+        .navigationDestination(
+            item: self.$store.scope(state: \.destination?.guideDetail, action: \.destination.guideDetail)
+        ) { store in
+            GuideDetailView(store: store)
+                .navigationTitle("Details")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(.hidden, for: .tabBar)
+                .toolbarRole(.editor)
+        }
         .onFirstAppear {
             send(.onFirstAppear)
         }

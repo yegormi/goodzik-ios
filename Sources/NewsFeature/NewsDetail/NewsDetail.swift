@@ -1,57 +1,58 @@
+//
+//  NewsDetail.swift
+//  goodzik-ios
+//
+//  Created by Yehor Myropoltsev on 05.12.2024.
+//
+
+import APIClient
 import ComposableArchitecture
 import Foundation
+import SharedModels
 
 @Reducer
-public struct News: Reducer {
+public struct NewsDetail: Reducer {
     @ObservableState
     public struct State: Equatable {
-        @Presents var destination: Destination.State?
-
-        public init() {}
+        var item: NewsItem
+        
+        public init(item: NewsItem) {
+            self.item = item
+        }
     }
-
+    
     public enum Action: ViewAction {
         case delegate(Delegate)
-        case destination(PresentationAction<Destination.Action>)
         case `internal`(Internal)
         case view(View)
-
+        
         public enum Delegate: Equatable {}
-
         public enum Internal: Equatable {}
-
         public enum View: Equatable, BindableAction {
-            case binding(BindingAction<News.State>)
+            case binding(BindingAction<NewsDetail.State>)
             case onAppear
         }
     }
-
-    @Reducer(state: .equatable)
-    public enum Destination {}
-
+    
     public init() {}
-
+    
     public var body: some ReducerOf<Self> {
         BindingReducer(action: \.view)
-
+        
         Reduce { _, action in
             switch action {
             case .delegate:
-                .none
-
-            case .destination:
-                .none
-
+                return .none
+                
             case .internal:
-                .none
-
+                return .none
+                
             case .view(.binding):
-                .none
-
+                return .none
+                
             case .view(.onAppear):
-                .none
+                return .none
             }
         }
-        .ifLet(\.$destination, action: \.destination)
     }
 }

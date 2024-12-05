@@ -4,21 +4,18 @@ import Foundation
 import SharedModels
 
 @Reducer
-public struct Guides: Reducer, Sendable {
+public struct GuideDetail: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
-        @Presents var destination: Destination.State?
+        var guide: Guide
         
-        var guides: [Guide]
-        
-        public init() {
-            self.guides = [.underwear, .socks]
+        public init(guide: Guide) {
+            self.guide = guide
         }
     }
 
     public enum Action: ViewAction {
         case delegate(Delegate)
-        case destination(PresentationAction<Destination.Action>)
         case `internal`(Internal)
         case view(View)
 
@@ -27,20 +24,13 @@ public struct Guides: Reducer, Sendable {
         public enum Internal {}
 
         public enum View: BindableAction {
-            case binding(BindingAction<Guides.State>)
+            case binding(BindingAction<GuideDetail.State>)
             case onFirstAppear
             case onAppear
-            case guideTapped(Guide)
         }
-    }
-    
-    @Reducer(state: .equatable)
-    public enum Destination {
-        case guideDetail(GuideDetail)
     }
 
     @Dependency(\.apiClient) var api
-
     @Dependency(\.uuid) var uuid
 
     public init() {}
@@ -51,9 +41,6 @@ public struct Guides: Reducer, Sendable {
         Reduce { state, action in
             switch action {
             case .delegate:
-                return .none
-                
-            case .destination:
                 return .none
 
             case .internal:
@@ -67,13 +54,7 @@ public struct Guides: Reducer, Sendable {
 
             case .view(.onAppear):
                 return .none
-                
-            case let .view(.guideTapped(guide)):
-                state.destination = .guideDetail(GuideDetail.State(guide: guide))
-
-                return .none
             }
         }
-        .ifLet(\.$destination, action: \.destination)
     }
 }

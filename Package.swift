@@ -19,6 +19,7 @@ let package = Package(
         .library(name: "FacebookClient", targets: ["FacebookClient"]),
         .library(name: "GoogleClient", targets: ["GoogleClient"]),
         .library(name: "GuidesFeature", targets: ["GuidesFeature"]),
+        .library(name: "NewsFeature", targets: ["NewsFeature"]),
         .library(name: "KeychainClient", targets: ["KeychainClient"]),
         .library(name: "SessionClient", targets: ["SessionClient"]),
         .library(name: "SettingsFeature", targets: ["SettingsFeature"]),
@@ -155,6 +156,20 @@ let package = Package(
             ]
         ),
         .target(
+            name: "NewsFeature",
+            dependencies: [
+                "APIClient",
+                "SharedModels",
+                "Styleguide",
+                "SwiftHelpers",
+                "SwiftUIHelpers",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        .target(
             name: "KeychainClient",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -231,6 +246,7 @@ let package = Package(
             dependencies: [
                 "AccountFeature",
                 "GuidesFeature",
+                "NewsFeature",
                 "Styleguide",
                 "SwiftHelpers",
                 "SwiftUIHelpers",

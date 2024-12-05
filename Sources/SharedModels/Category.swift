@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Category: Equatable {
+public struct Category: Identifiable, Equatable {
     public let id: String
     public let name: String
 }

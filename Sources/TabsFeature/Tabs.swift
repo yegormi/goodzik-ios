@@ -1,6 +1,7 @@
 import AccountFeature
 import ComposableArchitecture
 import GuidesFeature
+import NewsFeature
 import SwiftUI
 
 @Reducer
