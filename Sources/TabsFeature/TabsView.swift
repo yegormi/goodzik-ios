@@ -26,7 +26,7 @@ public struct TabsView: View {
                 GuidesView(
                     store: self.store.scope(state: \.guides, action: \.guides)
                 )
-                .background(Color(uiColor: .systemBackground))
+                .background(Color.tabBackground)
                 .navigationTitle("Guides")
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
@@ -36,7 +36,7 @@ public struct TabsView: View {
                 NewsView(
                     store: self.store.scope(state: \.news, action: \.news)
                 )
-                .background(Color(uiColor: .systemBackground))
+                .background(Color.tabBackground)
                 .navigationTitle("News")
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
@@ -46,7 +46,7 @@ public struct TabsView: View {
                 AccountView(
                     store: self.store.scope(state: \.account, action: \.account)
                 )
-                .background(Color(uiColor: .systemBackground))
+                .background(Color.tabBackground)
                 .navigationTitle("Account")
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
@@ -56,7 +56,7 @@ public struct TabsView: View {
                 DonateView(
                     store: self.store.scope(state: \.donate, action: \.donate)
                 )
-                .background(Color(uiColor: .systemBackground))
+                .background(Color.tabBackground)
                 .navigationTitle("Donate")
                 .toolbarTitleDisplayMode(.inlineLarge)
             }

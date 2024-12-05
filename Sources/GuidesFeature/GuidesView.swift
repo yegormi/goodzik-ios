@@ -14,9 +14,14 @@ public struct GuidesView: View {
     }
 
     public var body: some View {
-        VStack {
-            EmptyTabView()
+        ScrollView {
+            VStack(spacing: 20) {
+                ForEach(self.store.guides) { guide in
+                    GuideCardView(guide: guide)
+                }
+            }
         }
+        .contentMargins(.all, 20, for: .scrollContent)
         .onFirstAppear {
             send(.onFirstAppear)
         }

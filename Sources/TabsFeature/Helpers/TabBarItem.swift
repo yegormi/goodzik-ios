@@ -47,7 +47,7 @@ public struct CustomTabBar<Tab: Hashable>: View {
         .background {
             RoundedRectangle(cornerRadius: 50)
                 .fill(Color(uiColor: .systemBackground))
-                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                .shadow(color: Color.black.opacity(0.3), radius: 10, y: 5)
         }
     }
 }
@@ -102,6 +102,7 @@ public struct CustomTabViewContainer<Tab: Hashable, Content: View>: View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
                 self.content()
+                    .toolbar(.hidden, for: .tabBar)
             }
             
             CustomTabBar(

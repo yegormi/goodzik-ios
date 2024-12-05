@@ -20,4 +20,6 @@ public extension Color {
     static let textFieldBackground = Color(.textFieldBackground)
     
     static let orangePrimary = Color(.orangePrimary)
+    
+    static let tabBackground = Color(.tabBackground)
 }

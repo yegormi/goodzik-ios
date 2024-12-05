@@ -7,7 +7,11 @@ import SharedModels
 public struct Guides: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
-        public init() {}
+        var guides: [Guide]
+        
+        public init() {
+            self.guides = Array(repeating: [.underwear, .socks], count: 10).flatMap { $0 }
+        }
     }
 
     public enum Action: ViewAction {
