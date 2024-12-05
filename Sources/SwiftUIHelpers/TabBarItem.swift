@@ -42,7 +42,8 @@ public struct CustomTabBar<Tab: Hashable>: View {
                     item: item,
                     isSelected: self.selectedTab as AnyHashable == item.tab,
                     namespace: self.namespace
-                )                    { self.onSelect(item.tab as! Tab) }
+                )
+                { self.onSelect(item.tab as! Tab) }
             }
         }
         .padding(5)
@@ -78,6 +79,7 @@ private struct TabBarButton: View {
                     .frame(width: 20, height: 20)
                     .foregroundColor(self.isSelected ? .white : .black)
                     .animation(.spring(response: 0.3, dampingFraction: 0.7), value: self.isSelected)
+                    .padding(30)
             }
             .frame(width: 50, height: 50)
         }

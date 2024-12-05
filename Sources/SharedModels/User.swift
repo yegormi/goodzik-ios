@@ -2,15 +2,15 @@ import Foundation
 
 public struct User: Codable, Sendable, Equatable {
     public let id: String
-    public let username: String
+    public let username: String?
     public let email: String
-    public let role: String
+    public let role: String?
 
     public init(
         id: String,
-        username: String,
+        username: String? = nil,
         email: String,
-        role: String
+        role: String? = nil
     ) {
         self.id = id
         self.username = username

@@ -31,6 +31,12 @@ public struct AuthView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 VStack(alignment: .trailing, spacing: 14) {
+                    if self.store.authType == .signUp {
+                        TextField("Username", text: self.$store.username)
+                            .textFieldStyle(.auth)
+                            .textContentType(.name)
+                    }
+                    
                     TextField("Email", text: self.$store.email)
                         .textFieldStyle(.auth)
                         .textContentType(.emailAddress)
@@ -64,7 +70,7 @@ public struct AuthView: View {
                         Text(self.store.authType == .signIn ? "Sign up" : "Log in")
                             .foregroundStyle(Color.orangePrimary)
                             .onTapGesture {
-                                send(.toggleButtonTapped)
+                                send(.toggleButtonTapped, animation: .spring(response: 0.5, dampingFraction: 0.7))
                             }
                     }
                     .font(.labelLarge)

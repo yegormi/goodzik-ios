@@ -20,17 +20,13 @@ public struct SettingsAccount: Reducer, Sendable {
         var user: User
         var tab = Tab.general
 
-        var fullName: String
         var email: String
-        var password: String
 
         var isLoading = false
 
         public init(user: User) {
             self.user = user
-            self.fullName = user.fullName ?? ""
-            self.email = user.email ?? ""
-            self.password = "********"
+            self.email = user.email
         }
     }
 
@@ -93,23 +89,6 @@ public struct SettingsAccount: Reducer, Sendable {
                 return .none
 
             case let .internal(.updateResponse(result)):
-                state.isLoading = false
-
-                switch result {
-                case .success:
-                    state.destination = .plainAlert(.init {
-                        TextState("Success")
-                    } actions: {
-                        ButtonState(role: .cancel) {
-                            TextState("OK")
-                        }
-                    } message: {
-                        TextState("Account updated successfully")
-                    })
-                case let .failure(error):
-                    logger.warning("Failed to update the account, error: \(error)")
-                    state.destination = .plainAlert(.failed(error))
-                }
                 return .none
 
             case let .internal(.logoutResult(result)):
@@ -140,15 +119,9 @@ public struct SettingsAccount: Reducer, Sendable {
                 return .none
 
             case .view(.updateButtonTapped):
-                return self.update(&state)
+                return .none
 
             case .view(.resetButtonTapped):
-                // TODO: Move variables into internal form struct
-                // TODO: Reset to initial state with mapper from user - toForm()
-
-                state.email = state.user.email ?? ""
-                state.fullName = state.user.fullName ?? ""
-                state.password = "********"
                 return .none
 
             case .view(.logoutButtonTapped):
@@ -161,20 +134,6 @@ public struct SettingsAccount: Reducer, Sendable {
             }
         }
         .ifLet(\.$destination, action: \.destination)
-    }
-
-    private func update(_ state: inout State) -> Effect<Action> {
-        guard !state.isLoading else { return .none }
-        state.isLoading = true
-
-        return .run { [state] send in
-            await send(.internal(.updateResponse(Result {
-                let request = UpdateUserRequest(
-                    fullName: state.fullName
-                )
-                return try await self.api.updateCurrentUser(request)
-            })))
-        }
     }
 
     private func logout(_ state: inout State) -> Effect<Action> {
@@ -194,7 +153,7 @@ public struct SettingsAccount: Reducer, Sendable {
 
         return .run { send in
             await send(.internal(.deleteResponse(Result {
-                try await self.api.deleteCurrentUser()
+//                try await self.api.deleteCurrentUser()
             })))
         }
     }

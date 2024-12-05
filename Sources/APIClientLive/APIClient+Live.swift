@@ -29,21 +29,36 @@ extension APIClient: DependencyKey {
                 LoggingMiddleware(bodyLoggingConfiguration: .upTo(maxBytes: 1024)),
             ]
         )
-
+        
         return Self(
+            signup: { request in
+                try await throwingUnderlyingError {
+                    try await client
+                        .signup(body: .json(request.toAPI()))
+                        .created
+                        .body
+                        .json
+                        .toDomain()
+                }
+            },
+            login: { request in
+                try await throwingUnderlyingError {
+                    try await client
+                        .login(body: .json(request.toAPI()))
+                        .created
+                        .body
+                        .json
+                        .toDomain()
+                }
+            },
             getCurrentUser: {
                 try await throwingUnderlyingError {
-                    try await client.getMe().ok.body.json.toDomain()
-                }
-            },
-            updateCurrentUser: { request in
-                try await throwingUnderlyingError {
-                    _ = try await client.updateMe(body: .json(request.toAPI())).ok
-                }
-            },
-            deleteCurrentUser: {
-                try await throwingUnderlyingError {
-                    _ = try await client.deleteMe().noContent
+                    try await client
+                        .getMe()
+                        .ok
+                        .body
+                        .json
+                        .toDomain()
                 }
             }
         )

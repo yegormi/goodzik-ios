@@ -14,7 +14,7 @@ paths:
             schema:
               $ref: '#/components/schemas/SignupRequestDto'
       responses:
-        '200':
+        '201':
           description: ''
           content:
             application/json:
@@ -46,7 +46,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LoginRequestDto'
       responses:
-        '200':
+        '201':
           description: ''
           content:
             application/json:
@@ -196,9 +196,7 @@ components:
           description: Role of the user
       required:
         - id
-        - userName
         - email
-        - role
     SignupResponseDto:
       type: object
       properties:

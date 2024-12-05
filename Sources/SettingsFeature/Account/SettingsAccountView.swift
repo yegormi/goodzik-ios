@@ -29,22 +29,10 @@ public struct SettingsAccountView: View {
 
                     VStack { Divider().overlay(Color.secondary) }
 
-                    self.userAvatar(for: self.store.user)
-                        .frame(width: 150, height: 150)
-
                     VStack(spacing: 14) {
-                        TextField("Full name", text: self.$store.fullName)
-                            .textFieldStyle(.auth)
-                            .textContentType(.name)
-
                         TextField("Email", text: self.$store.email)
                             .textFieldStyle(.auth)
                             .textContentType(.emailAddress)
-                            .disabled(true)
-
-                        PasswordField("Password", text: self.$store.password)
-                            .textFieldStyle(.auth)
-                            .textContentType(.password)
                             .disabled(true)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -100,51 +88,6 @@ public struct SettingsAccountView: View {
         .alert(
             store: self.store.scope(state: \.$destination.plainAlert, action: \.destination.plainAlert)
         )
-    }
-
-    @ViewBuilder
-    private func avatarCell(for user: SharedModels.User) -> some View {
-        HStack(spacing: 12) {
-            self.userAvatar(for: user)
-                .frame(width: 70, height: 70)
-
-            VStack(alignment: .leading, spacing: 5) {
-                Text(user.fullName ?? "No username provided")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(Color.primary)
-                Text(user.email ?? "No email registered")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundStyle(Color.neutral500)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    @ViewBuilder
-    private func userAvatar(for user: SharedModels.User) -> some View {
-        if let pictureURL = user.photoURL {
-            AsyncImage(url: pictureURL) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(Circle())
-            } placeholder: {
-                self.placeholderAvatar(for: user)
-            }
-        } else {
-            self.placeholderAvatar(for: user)
-        }
-    }
-
-    @ViewBuilder
-    private func placeholderAvatar(for user: User) -> some View {
-        Circle()
-            .foregroundStyle(Color.neutral200)
-            .overlay {
-                Text(user.fullName?.first?.uppercased() ?? "")
-                    .font(.system(size: 24, weight: .regular))
-                    .foregroundStyle(Color.neutral500)
-            }
     }
 }
 

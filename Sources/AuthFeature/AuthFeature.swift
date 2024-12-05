@@ -11,8 +11,6 @@ import KeychainClient
 import OSLog
 import SessionClient
 import SharedModels
-import Supabase
-import SupabaseSwiftClient
 import SwiftHelpers
 
 private let logger = Logger(subsystem: "AuthenticationFeature", category: "Auth")
@@ -24,24 +22,21 @@ public struct AuthFeature: Reducer, Sendable {
         public init() {}
 
         var authType: AuthType = .signIn
+        var username = ""
         var email = ""
         var password = ""
         var confirmPassword = ""
-        var rawNonce = ""
         var isLoading = false
         @Presents var destination: Destination.State?
-
-        /// Checks if the form inputs are valid based on the authentication type:
-        /// - Requires a valid email format and non-empty password.
-        /// - For `.signIn`, only email and password are required.
-        /// - Otherwise, `password` must match `confirmPassword`.
+        
         var isFormValid: Bool {
-            guard self.email.isValidEmail, !self.password.isEmpty else { return false }
-            return self.authType == .signIn || self.password == self.confirmPassword
-        }
-
-        mutating func regenerateNonce() {
-            self.rawNonce = randomNonceString()
+            switch self.authType {
+            case .signIn:
+                self.email.isValidEmail && !self.password.isEmpty
+            case .signUp:
+                !self.username.isEmpty && self.email.isValidEmail &&
+                !self.password.isEmpty && self.password == self.confirmPassword
+            }
         }
     }
 
@@ -57,9 +52,7 @@ public struct AuthFeature: Reducer, Sendable {
 
         public enum Internal {
             case localAuthResponse(Result<Void, Error>)
-            case supabaseResponse(Result<Session, Error>)
-            case googleResponse(Result<GoogleUser, Error>)
-            case facebookResponse(Result<FBAuthenticationToken, Error>)
+            case authResponse(Result<AuthResponse, Error>)
         }
 
         public enum View: BindableAction {
@@ -67,7 +60,6 @@ public struct AuthFeature: Reducer, Sendable {
             case toggleButtonTapped
             case loginButtonTapped
             case signupButtonTapped
-            case providerButtonTapped(AuthServiceType)
         }
     }
 
@@ -81,12 +73,6 @@ public struct AuthFeature: Reducer, Sendable {
     @Dependency(\.session) var session
 
     @Dependency(\.dismiss) var dismiss
-
-    @Dependency(\.authGoogle) var google
-
-    @Dependency(\.authFacebook) var facebook
-
-    @Dependency(\.supabaseClient) var supabase
 
     public init() {}
 
@@ -112,7 +98,7 @@ public struct AuthFeature: Reducer, Sendable {
                     return .none
                 }
 
-            case let .internal(.supabaseResponse(result)):
+            case let .internal(.authResponse(result)):
                 state.isLoading = false
 
                 switch result {
@@ -125,55 +111,8 @@ public struct AuthFeature: Reducer, Sendable {
                         })))
                     }
                 case let .failure(error):
-                    logger.error("Failed to login with Supabase, error: \(error)")
+                    logger.error("Failed with error: \(error)")
                     state.destination = .alert(.failedToAuth(error: error))
-                    return .none
-                }
-
-            case let .internal(.googleResponse(result)):
-                switch result {
-                case let .success(user):
-                    state.isLoading = true
-                    let credential = OpenIDConnectCredentials(
-                        provider: .google,
-                        idToken: user.idToken,
-                        accessToken: user.accessToken
-                    )
-
-                    return .run { send in
-                        await send(.internal(.supabaseResponse(Result {
-                            try await self.supabase.signInWithIdToken(credentials: credential)
-                        })))
-                    }
-
-                case let .failure(error):
-                    logger.error("Failed to authenticate with Google, error: \(error)")
-                    if !error.isUserCancelled {
-                        state.destination = .alert(.failedToAuth(error: error))
-                    }
-                    return .none
-                }
-
-            case let .internal(.facebookResponse(result)):
-                switch result {
-                case let .success(authenticationToken):
-                    state.isLoading = true
-                    let credential = OpenIDConnectCredentials(
-                        provider: .facebook,
-                        idToken: authenticationToken.rawValue,
-                        nonce: state.rawNonce
-                    )
-                    return .run { send in
-                        await send(.internal(.supabaseResponse(Result {
-                            try await self.supabase.signInWithIdToken(credentials: credential)
-                        })))
-                    }
-
-                case let .failure(error):
-                    logger.error("Failed to authenticate with Facebook: \(error)")
-                    if !error.isUserCancelled {
-                        state.destination = .alert(.failedToAuth(error: error))
-                    }
                     return .none
                 }
 
@@ -190,23 +129,6 @@ public struct AuthFeature: Reducer, Sendable {
 
             case .view(.signupButtonTapped):
                 return self.signup(&state)
-
-            case let .view(.providerButtonTapped(service)):
-                switch service {
-                case .google:
-                    return .run { send in
-                        await send(.internal(.googleResponse(Result {
-                            try await self.google.authenticate()
-                        })))
-                    }
-                case .facebook:
-                    state.regenerateNonce()
-                    return .run { [state] send in
-                        await send(.internal(.facebookResponse(Result {
-                            try await self.facebook.authenticate(hashedNonce: sha256(state.rawNonce))
-                        })))
-                    }
-                }
             }
         }
         .ifLet(\.$destination, action: \.destination)
@@ -217,11 +139,9 @@ public struct AuthFeature: Reducer, Sendable {
         state.isLoading = true
 
         return .run { [state] send in
-            await send(.internal(.supabaseResponse(Result {
-                try await self.supabase.signIn(
-                    email: state.email,
-                    password: state.password
-                )
+            await send(.internal(.authResponse(Result {
+                let request = LoginRequest(email: state.email, password: state.password)
+                return try await self.api.login(request)
             })))
         }
     }
@@ -231,11 +151,13 @@ public struct AuthFeature: Reducer, Sendable {
         state.isLoading = true
 
         return .run { [state] send in
-            await send(.internal(.supabaseResponse(Result {
-                try await self.supabase.signUp(
+            await send(.internal(.authResponse(Result {
+                let request = SignupRequest(
+                    userName: state.username,
                     email: state.email,
                     password: state.password
                 )
+                return try await self.api.signup(request)
             })))
         }
     }

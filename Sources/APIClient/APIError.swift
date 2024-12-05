@@ -10,6 +10,7 @@ public struct APIErrorPayload: Equatable, Sendable {
         case entityNotFound
         case incorrectPassword
         case emailNotUnique
+        case forbidden
     }
 
     public let code: Code

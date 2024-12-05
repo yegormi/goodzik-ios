@@ -10,10 +10,16 @@ extension Components.Schemas.ApiErrorDto {
 extension Components.Schemas.ApiErrorDto.codePayload {
     func toDomain() -> APIErrorPayload.Code {
         switch self {
-        case ._internal: .internalError
-        case .unauthorized: .unauthorized
-        case .email_hyphen_not_hyphen_unique: .emailNotUnique
-        case .entity_hyphen_not_hyphen_found: .entityNotFound
+        case ._internal:
+                .internalError
+        case .entity_hyphen_not_hyphen_found:
+                .entityNotFound
+        case .email_hyphen_not_hyphen_unique:
+                .emailNotUnique
+        case .unauthorized:
+                .unauthorized
+        case .forbidden:
+                .forbidden
         }
     }
 }

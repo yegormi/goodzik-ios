@@ -2,8 +2,8 @@ import SharedModels
 
 public extension APIClient {
     static let mock = Self(
-        getCurrentUser: { .mock },
-        updateCurrentUser: { _ in },
-        deleteCurrentUser: {}
+        signup: { _ in .mock },
+        login: { _ in .mock },
+        getCurrentUser: { .mock }
     )
 }

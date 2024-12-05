@@ -14,9 +14,6 @@ public struct SettingsGeneralView: View {
 
     public var body: some View {
         VStack(spacing: 24) {
-            self.avatarCell(for: self.store.user)
-                .padding(.horizontal, 16)
-
             VStack(alignment: .leading, spacing: 16) {
                 Text("Appearance")
                     .font(.system(size: 13, weight: .semibold))
@@ -102,51 +99,6 @@ public struct SettingsGeneralView: View {
         case .dark:
             Color.black.opacity(0.3)
         }
-    }
-
-    @ViewBuilder
-    private func avatarCell(for user: SharedModels.User) -> some View {
-        HStack(spacing: 12) {
-            self.userAvatar(for: user)
-                .frame(width: 70, height: 70)
-
-            VStack(alignment: .leading, spacing: 5) {
-                Text(user.fullName ?? "No username provided")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(Color.primary)
-                Text(user.email ?? "No email registered")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundStyle(Color.neutral500)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    @ViewBuilder
-    private func userAvatar(for user: SharedModels.User) -> some View {
-        if let pictureURL = user.photoURL {
-            AsyncImage(url: pictureURL) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(Circle())
-            } placeholder: {
-                self.placeholderAvatar(for: user)
-            }
-        } else {
-            self.placeholderAvatar(for: user)
-        }
-    }
-
-    @ViewBuilder
-    private func placeholderAvatar(for user: User) -> some View {
-        Circle()
-            .foregroundStyle(Color.neutral200)
-            .overlay {
-                Text(user.fullName?.first?.uppercased() ?? "")
-                    .font(.system(size: 24, weight: .regular))
-                    .foregroundStyle(Color.neutral500)
-            }
     }
 }
 

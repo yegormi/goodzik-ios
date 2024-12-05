@@ -76,8 +76,7 @@ public struct AppReducer: Reducer, Sendable {
                     }
 
                     // MARK: - Testing
-
-                    await send(.changeToDestination(.tabs(Tabs.State())))
+//                    await send(.changeToDestination(.tabs(Tabs.State())))
 
                     // Logout
                     for await user in self.session.currentUsers() where user == nil {

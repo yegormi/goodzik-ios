@@ -103,20 +103,13 @@ let package = Package(
             name: "AuthFeature",
             dependencies: [
                 "APIClient",
-                "FacebookClient",
-                "GoogleClient",
                 "KeychainClient",
                 "SessionClient",
                 "SharedModels",
                 "Styleguide",
-                "SupabaseSwiftClient",
                 "SwiftHelpers",
                 "SwiftUIHelpers",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "FacebookCore", package: "facebook-ios-sdk"),
-                .product(name: "FacebookLogin", package: "facebook-ios-sdk"),
-                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
-                .product(name: "Supabase", package: "supabase-swift"),
             ],
             resources: [
                 .process("Resources")
