@@ -23,7 +23,7 @@ public struct AccountView: View {
             barMetrics: .default
         )
         // Changes the color for the selected item
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.purple400)
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.orangePrimary)
         // Changes the text color for the selected item
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
     }

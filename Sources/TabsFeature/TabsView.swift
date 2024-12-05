@@ -1,79 +1,66 @@
 import AccountFeature
 import ComposableArchitecture
-import HomeFeature
+import GuidesFeature
 import Styleguide
 import SwiftHelpers
 import SwiftUI
 
+@ViewAction(for: Tabs.self)
 public struct TabsView: View {
     @Bindable public var store: StoreOf<Tabs>
-
+    
     public init(store: StoreOf<Tabs>) {
         self.store = store
-
-        // Configure tab bar layout
-        let appearance = UITabBarAppearance()
-        appearance.backgroundColor = .systemBackground
-        appearance.shadowImage = UIColor(Color.black.opacity(0.3)).image(size: CGSize(width: 1.0, height: 0.3))
-        appearance.shadowColor = nil
-
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
-
+    
+    private let tabs: [TabBarItem] = [
+        .init(tab: Tabs.State.Tab.guides, title: "Guides", resource: .guidesTab),
+        .init(tab: Tabs.State.Tab.news, title: "News", resource: .newsTab),
+        .init(tab: Tabs.State.Tab.donate, title: "Donate", resource: .donateTab),
+        .init(tab: Tabs.State.Tab.account, title: "Account", resource: .accountTab)
+    ]
+    
     public var body: some View {
-        TabView(selection: self.$store.tab) {
+        CustomTabViewContainer(tabs: tabs, selectedTab: self.$store.tab) {
             NavigationStack {
-                HomeView(
-                    store: self.store.scope(state: \.home, action: \.home)
+                GuidesView(
+                    store: self.store.scope(state: \.guides, action: \.guides)
                 )
-                .background(Color(uiColor: UIColor.systemBackground))
-                .navigationTitle("Home")
+                .background(Color(uiColor: .systemBackground))
+                .navigationTitle("Guides")
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
-            .tag(Tabs.State.Tab.home)
-            .tabItem {
-                Label("Home", image: .homeTab)
-            }
-
+            .tag(Tabs.State.Tab.guides)
+            
             NavigationStack {
-                ExploreView(
-                    store: self.store.scope(state: \.explore, action: \.explore)
+                NewsView(
+                    store: self.store.scope(state: \.news, action: \.news)
                 )
-                .background(Color(uiColor: UIColor.systemBackground))
-                .navigationTitle("Explore")
+                .background(Color(uiColor: .systemBackground))
+                .navigationTitle("News")
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
-            .tag(Tabs.State.Tab.explore)
-            .tabItem {
-                Label("Explore", image: .exploreTab)
-            }
-
-            NavigationStack {
-                FavoritesView(
-                    store: self.store.scope(state: \.favorites, action: \.favorites)
-                )
-                .background(Color(uiColor: UIColor.systemBackground))
-                .navigationTitle("Favorites")
-                .toolbarTitleDisplayMode(.inlineLarge)
-            }
-            .tag(Tabs.State.Tab.favorites)
-            .tabItem {
-                Label("Favorites", image: .favoritesTab)
-            }
-
+            .tag(Tabs.State.Tab.news)
+            
             NavigationStack {
                 AccountView(
                     store: self.store.scope(state: \.account, action: \.account)
                 )
-                .background(Color(uiColor: UIColor.systemBackground))
+                .background(Color(uiColor: .systemBackground))
                 .navigationTitle("Account")
                 .toolbarTitleDisplayMode(.inlineLarge)
             }
             .tag(Tabs.State.Tab.account)
-            .tabItem {
-                Label("Account", image: .accountTab)
+            
+            NavigationStack {
+                DonateView(
+                    store: self.store.scope(state: \.donate, action: \.donate)
+                )
+                .background(Color(uiColor: .systemBackground))
+                .navigationTitle("Donate")
+                .toolbarTitleDisplayMode(.inlineLarge)
             }
+            .tag(Tabs.State.Tab.donate)
         }
     }
 }

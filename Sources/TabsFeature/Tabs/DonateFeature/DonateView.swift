@@ -4,11 +4,11 @@ import Styleguide
 import SwiftUI
 import SwiftUIHelpers
 
-@ViewAction(for: Favorites.self)
-public struct FavoritesView: View {
-    @Bindable public var store: StoreOf<Favorites>
+@ViewAction(for: Donate.self)
+public struct DonateView: View {
+    @Bindable public var store: StoreOf<Donate>
 
-    public init(store: StoreOf<Favorites>) {
+    public init(store: StoreOf<Donate>) {
         self.store = store
     }
 
@@ -23,7 +23,7 @@ public struct FavoritesView: View {
 }
 
 #Preview {
-    FavoritesView(store: Store(initialState: Favorites.State()) {
-        Favorites()
+    DonateView(store: Store(initialState: Donate.State()) {
+        Donate()
     })
 }

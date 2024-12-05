@@ -18,7 +18,7 @@ let package = Package(
         .library(name: "AuthFeature", targets: ["AuthFeature"]),
         .library(name: "FacebookClient", targets: ["FacebookClient"]),
         .library(name: "GoogleClient", targets: ["GoogleClient"]),
-        .library(name: "HomeFeature", targets: ["HomeFeature"]),
+        .library(name: "GuidesFeature", targets: ["GuidesFeature"]),
         .library(name: "KeychainClient", targets: ["KeychainClient"]),
         .library(name: "SessionClient", targets: ["SessionClient"]),
         .library(name: "SettingsFeature", targets: ["SettingsFeature"]),
@@ -141,7 +141,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "HomeFeature",
+            name: "GuidesFeature",
             dependencies: [
                 "APIClient",
                 "SharedModels",
@@ -230,7 +230,7 @@ let package = Package(
             name: "TabsFeature",
             dependencies: [
                 "AccountFeature",
-                "HomeFeature",
+                "GuidesFeature",
                 "Styleguide",
                 "SwiftHelpers",
                 "SwiftUIHelpers",

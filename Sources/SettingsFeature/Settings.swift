@@ -27,7 +27,9 @@ public struct Settings: Reducer, Sendable {
         public init() {
             @Dependency(\.appearance) var appearance
             @Dependency(\.session) var session
-            let user = session.unsafeCurrentUser
+            // TODO: User is mocked
+//            let user = session.unsafeCurrentUser
+            let user = User.mock
 
             self.user = user
             self.general = SettingsGeneral.State(

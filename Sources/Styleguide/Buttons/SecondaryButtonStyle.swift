@@ -28,7 +28,7 @@ public struct SecondaryButtonStyle: ButtonStyle {
             .font(.titleRegular)
             .foregroundStyle(
                 self.isEnabled ?
-                    (self.colorScheme == .dark ? Color.purple400 : Color.purple500) :
+                    (self.colorScheme == .dark ? Color.orangePrimary : Color.orangePrimary) :
                     (self.colorScheme == .dark ? Color.neutral600 : Color.neutral500)
             )
             .padding(.vertical, self.size.verticalPadding)
@@ -37,7 +37,7 @@ public struct SecondaryButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 12)
                     .strokeBorder(
                         self.isEnabled ?
-                            (self.colorScheme == .dark ? Color.purple400 : Color.purple500) :
+                            (self.colorScheme == .dark ? Color.orangePrimary : Color.orangePrimary) :
                             (self.colorScheme == .dark ? Color.neutral600 : Color.neutral500),
                         lineWidth: 2
                     )

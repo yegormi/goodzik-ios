@@ -5,11 +5,11 @@ import SwiftHelpers
 import SwiftUI
 import SwiftUIHelpers
 
-@ViewAction(for: Home.self)
-public struct HomeView: View {
-    @Bindable public var store: StoreOf<Home>
+@ViewAction(for: Guides.self)
+public struct GuidesView: View {
+    @Bindable public var store: StoreOf<Guides>
 
-    public init(store: StoreOf<Home>) {
+    public init(store: StoreOf<Guides>) {
         self.store = store
     }
 
@@ -27,7 +27,7 @@ public struct HomeView: View {
 }
 
 #Preview {
-    HomeView(store: Store(initialState: Home.State()) {
-        Home()
+    GuidesView(store: Store(initialState: Guides.State()) {
+        Guides()
     })
 }

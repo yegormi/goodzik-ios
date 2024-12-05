@@ -18,8 +18,9 @@ public struct AuthView: View {
                 HStack(spacing: 0) {
                     Image(.appLogo)
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(maxWidth: 50)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 30)
+                        .padding(8)
                     Text("Goodzik")
                         .font(.system(size: 20))
                         .bold()
@@ -61,32 +62,12 @@ public struct AuthView: View {
                     Group {
                         Text(self.store.authType == .signIn ? "Don't have an account?" : "Already have an account?")
                         Text(self.store.authType == .signIn ? "Sign up" : "Log in")
-                            .foregroundStyle(Color.purple400)
+                            .foregroundStyle(Color.orangePrimary)
                             .onTapGesture {
                                 send(.toggleButtonTapped)
                             }
                     }
                     .font(.labelLarge)
-                }
-
-                HStack(spacing: 8) {
-                    VStack { Divider() }
-
-                    Text("or continue with")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(Color.neutral500)
-
-                    VStack { Divider() }
-                }
-
-                VStack(spacing: 16) {
-                    ProviderButton(of: .google) {
-                        send(.providerButtonTapped(.google))
-                    }
-
-                    ProviderButton(of: .facebook) {
-                        send(.providerButtonTapped(.facebook))
-                    }
                 }
             }
         }

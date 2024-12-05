@@ -1,38 +1,39 @@
 import AccountFeature
 import ComposableArchitecture
-import HomeFeature
+import GuidesFeature
 import SwiftUI
 
 @Reducer
 public struct Tabs: Reducer {
     @ObservableState
     public struct State: Equatable {
-        var tab = Tab.home
-        var home = Home.State()
-        var explore = Explore.State()
-        var favorites = Favorites.State()
+        var tab = Tab.guides
+        var guides = Guides.State()
+        var news = News.State()
         var account = Account.State()
+        var donate = Donate.State()
 
         public init() {}
 
         public enum Tab: Equatable {
-            case home
-            case explore
-            case favorites
+            case guides
+            case news
             case account
+            case donate
         }
     }
 
     public enum Action: ViewAction {
-        case home(Home.Action)
-        case explore(Explore.Action)
-        case favorites(Favorites.Action)
+        case guides(Guides.Action)
+        case news(News.Action)
+        case donate(Donate.Action)
         case account(Account.Action)
 
         case view(View)
 
         public enum View: BindableAction, Equatable {
             case binding(BindingAction<State>)
+            case tabSelected(State.Tab)
         }
     }
 
@@ -41,38 +42,42 @@ public struct Tabs: Reducer {
     public var body: some ReducerOf<Self> {
         BindingReducer(action: \.view)
 
-        Scope(state: \.home, action: \.home) {
-            Home()
+        Scope(state: \.guides, action: \.guides) {
+            Guides()
         }
 
-        Scope(state: \.explore, action: \.explore) {
-            Explore()
+        Scope(state: \.news, action: \.news) {
+            News()
         }
 
-        Scope(state: \.favorites, action: \.favorites) {
-            Favorites()
+        Scope(state: \.donate, action: \.donate) {
+            Donate()
         }
 
         Scope(state: \.account, action: \.account) {
             Account()
         }
 
-        Reduce { _, action in
+        Reduce { state, action in
             switch action {
-            case .home:
-                .none
+            case .guides:
+                return .none
 
-            case .explore:
-                .none
+            case .news:
+                return .none
 
-            case .favorites:
-                .none
+            case .donate:
+                return .none
 
             case .account:
-                .none
+                return .none
+                
+            case let .view(.tabSelected(tab)):
+                state.tab = tab
+                return .none
 
             case .view:
-                .none
+                return .none
             }
         }
     }

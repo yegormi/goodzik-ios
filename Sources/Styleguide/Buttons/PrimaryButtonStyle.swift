@@ -36,7 +36,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(
-                        self.isEnabled ? Color.purple400 : (self.colorScheme == .dark ? Color.neutral600 : Color.neutral200)
+                        self.isEnabled ? Color.orangePrimary : (self.colorScheme == .dark ? Color.neutral600 : Color.neutral200)
                     )
             )
             .scaleEffect(configuration.isPressed ? 0.95 : 1)

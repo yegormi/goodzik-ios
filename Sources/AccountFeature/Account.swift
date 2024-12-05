@@ -25,7 +25,9 @@ public struct Account: Reducer, Sendable {
 
         public init() {
             @Dependency(\.session) var session
-            self.user = session.unsafeCurrentUser
+            // TODO: - User Mock
+//            self.user = session.unsafeCurrentUser
+            self.user = User.mock
         }
     }
 

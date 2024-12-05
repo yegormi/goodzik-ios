@@ -1,34 +1,33 @@
-import APIClient
 import ComposableArchitecture
 import Foundation
-import SharedModels
 
 @Reducer
-public struct Home: Reducer, Sendable {
+public struct News: Reducer {
     @ObservableState
     public struct State: Equatable {
+        @Presents var destination: Destination.State?
+
         public init() {}
     }
 
     public enum Action: ViewAction {
         case delegate(Delegate)
+        case destination(PresentationAction<Destination.Action>)
         case `internal`(Internal)
         case view(View)
 
-        public enum Delegate {}
+        public enum Delegate: Equatable {}
 
-        public enum Internal {}
+        public enum Internal: Equatable {}
 
-        public enum View: BindableAction {
-            case binding(BindingAction<Home.State>)
-            case onFirstAppear
+        public enum View: Equatable, BindableAction {
+            case binding(BindingAction<News.State>)
             case onAppear
         }
     }
 
-    @Dependency(\.apiClient) var api
-
-    @Dependency(\.uuid) var uuid
+    @Reducer(state: .equatable)
+    public enum Destination {}
 
     public init() {}
 
@@ -40,18 +39,19 @@ public struct Home: Reducer, Sendable {
             case .delegate:
                 .none
 
+            case .destination:
+                .none
+
             case .internal:
                 .none
 
             case .view(.binding):
                 .none
 
-            case .view(.onFirstAppear):
-                .none
-
             case .view(.onAppear):
                 .none
             }
         }
+        .ifLet(\.$destination, action: \.destination)
     }
 }

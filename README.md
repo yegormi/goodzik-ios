@@ -22,7 +22,7 @@ A powerful, user-friendly iOS app for organizing, tracking, and managing events.
 ## Features
 
 - **Create Events**: Seamlessly set up events with details like date, time, location, and description.
-- **Explore Events**: Discover events happening around you with our location-based search.
+- **News Events**: Discover events happening around you with our location-based search.
 - **Join and Share**: Easily join and share events with friends.
 - **Notifications**: Stay updated with event reminders and notifications.
 
@@ -55,7 +55,7 @@ A powerful, user-friendly iOS app for organizing, tracking, and managing events.
 ## Usage
 
 1. **Create an Account**: Register and sign in to start managing events.
-2. **Explore Events**: Browse events or search by location.
+2. **News Events**: Browse events or search by location.
 3. **Create and Manage Events**: Create, edit, and delete events.
 4. **Join Events**: RSVP to events, and receive reminders.
 
@@ -70,7 +70,7 @@ A powerful, user-friendly iOS app for organizing, tracking, and managing events.
   </p>
   
   <p align="center">
-    <img src="https://github.com/user-attachments/assets/72456c51-0a25-4d82-998e-f74022aba598" width="49%" alt="Home">
+    <img src="https://github.com/user-attachments/assets/72456c51-0a25-4d82-998e-f74022aba598" width="49%" alt="Guides">
     <img src="https://github.com/user-attachments/assets/99601260-1579-4918-a97c-75b4def21d8c" width="49%" alt="Account">
   </p>
 
