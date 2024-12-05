@@ -22,4 +22,9 @@ public extension Color {
     static let orangePrimary = Color(.orangePrimary)
 
     static let tabBackground = Color(.tabBackground)
+
+    static let messageIncoming = Color(.messageIncoming)
+    static let messageOutgoing = Color(.messageOutgoing)
+
+    static let textPrimary = Color(.textPrimary)
 }
