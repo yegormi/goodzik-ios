@@ -10,7 +10,16 @@ public struct News: Reducer {
         var newsItems: [NewsItem]
 
         public init() {
-            self.newsItems = Array(repeating: NewsItem.mock, count: 10)
+            self.newsItems = Array(repeating: NewsItem.mock, count: 10).map {
+                NewsItem(
+                    id: UUID(),
+                    title: $0.title,
+                    date: $0.date,
+                    description: $0.description,
+                    categories: $0.categories,
+                    imageURL: $0.imageURL
+                )
+            }
         }
     }
 
