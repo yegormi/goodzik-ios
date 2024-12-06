@@ -45,7 +45,7 @@ public struct GuidesView: View {
             GuideDetailView(store: store)
                 .navigationTitle("Details")
                 .navigationBarTitleDisplayMode(.inline)
-                .hideTabBar(true)
+                .tabBarVisibility(.temporaryHidden)
         }
     }
 }

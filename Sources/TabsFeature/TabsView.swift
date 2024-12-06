@@ -24,7 +24,7 @@ public struct TabsView: View {
     ]
 
     public var body: some View {
-        CustomTabViewContainer(tabs: self.tabs, selectedTab: self.$store.tab) {
+        CustomTabViewContainerExtra(tabs: self.tabs, selectedTab: self.$store.tab) {
             NavigationStack {
                 GuidesView(
                     store: self.store.scope(state: \.guides, action: \.guides)
