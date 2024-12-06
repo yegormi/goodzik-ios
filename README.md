@@ -1,99 +1,95 @@
-# 🌟 Goodzik
+# 🧵 Sewing Division iOS
+[![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org/)
+[![Platform](https://img.shields.io/badge/Platform-iOS-blue.svg)](https://www.apple.com/ios/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)
-![Platform](https://img.shields.io/badge/Platform-iOS-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
+The iOS mobile application for Sewing Division ("Швейна рота") - a volunteer platform connecting creators of adaptive clothing for wounded military personnel. Our app provides seamless access to tutorials, patterns, and community features for volunteers worldwide.
 
-A powerful, user-friendly iOS app for organizing, tracking, and managing events. Goodzik provides an intuitive interface for creating and attending events, helping users stay connected and informed.
+## 📱 Features
+* **Video Learning**: Stream HD masterclass tutorials for adaptive clothing creation
+* **Pattern Access**: Download and view detailed sewing patterns
+* **Multilingual**: Full support for Ukrainian and English
+* **Offline Mode**: Download patterns and tutorials for offline access
+* **Community Integration**: Connect with other volunteers
+* **Project Tracking**: Monitor your contribution and impact
+* **Resource Library**: Organized categories for cyber-wear, armor-wear, and accessories
 
-## Table of Contents
+## 🛠️ Technology Stack
+* **Language**: Swift
+* **Architecture**: TCA (The Composable Architecture) with SPM
+* **UI Framework**: SwiftUI
+* **Video Playback**: AVKit
+* **Networking**: OpenAPI Runtime
+* **Storage**: Core Data
+* **Localization**: xcstrings-tool
 
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-
-## Features
-
-- **Create Events**: Seamlessly set up events with details like date, time, location, and description.
-- **News Events**: Discover events happening around you with our location-based search.
-- **Join and Share**: Easily join and share events with friends.
-- **Notifications**: Stay updated with event reminders and notifications.
-
-## Technology Stack
-
-- **Language**: Swift
-- **Architecture**: SPM with modular architecture by features
-- **Frameworks**: SwiftUI, TCA (The Composable Architecture)
-- **Networking**: OpenAPI Runtime/Generator
-- **Additional Libraries**: Dependencies as DI, Tagged by Point-Free
-
-## Getting Started
-
+## 🚀 Getting Started
 ### Prerequisites
+* iOS 17.0+
+* Xcode 16+
+* CocoaPods or Swift Package Manager
 
-- iOS 17.0+ / macOS 14+
-- Xcode 16+
-  
 ### Installation
-
-1. **Clone the repository:**
+1. Clone the repository:
    ```bash
-   git clone https://github.com/yegormi/goodzik-ios.git
-   cd goodzik-ios
+   git clone https://github.com/your-username/sewing-division-ios.git
+   cd sewing-division-ios
    ```
 
-2. **Run the app**:
-   Select your target device or simulator and press `Cmd + R`.
+2. Install dependencies:
+   ```bash
+   pod install
+   # or
+   swift package resolve
+   ```
 
-## Usage
+3. Open the workspace:
+   ```bash
+   open SewingDivision.xcworkspace
+   ```
 
-1. **Create an Account**: Register and sign in to start managing events.
-2. **News Events**: Browse events or search by location.
-3. **Create and Manage Events**: Create, edit, and delete events.
-4. **Join Events**: RSVP to events, and receive reminders.
+4. Build and run using Xcode
 
-## Screenshots
+## 📂 Project Structure
+```plaintext
+SewingDivision/
+├── App/                 # App entry point
+├── Features/           
+│   ├── Tutorials/      # Video tutorials
+│   ├── Patterns/       # Pattern management
+│   ├── Profile/        # User profile
+│   └── Community/      # Community features
+├── Core/
+│   ├── Networking/     # API client
+│   ├── Storage/        # Local storage
+│   └── Common/         # Shared utilities
+└── Resources/          # Assets and localization
+```
 
-<details>
-  <summary>🖼️ Click to view the app gallery ✨</summary>
-  
-  <p align="center">
-    <img src="https://github.com/user-attachments/assets/25931b10-42bf-4c10-af62-c5b86376bd2f" width="49%" alt="Sign in">
-    <img src="https://github.com/user-attachments/assets/c82ed617-b274-42d9-aa03-8b3234eca0eb" width="49%" alt="Sign up">
-  </p>
-  
-  <p align="center">
-    <img src="https://github.com/user-attachments/assets/72456c51-0a25-4d82-998e-f74022aba598" width="49%" alt="Guides">
-    <img src="https://github.com/user-attachments/assets/99601260-1579-4918-a97c-75b4def21d8c" width="49%" alt="Account">
-  </p>
+## 🌍 Impact Statistics
+* 100,000+ adaptive clothing items created
+* 700+ active volunteers
+* 1,800+ individual requests fulfilled
+* 100+ medical facilities supported
 
-  <p align="center">
-    <img src="https://github.com/user-attachments/assets/5df64a8a-6933-4280-ad51-01444cba22cf" width="49%" alt="Settings - General">
-    <img src="https://github.com/user-attachments/assets/a70c0682-58ad-4f71-b233-4093e5cb73a4" width="49%" alt="Settings - Account">
-  </p>
-</details>
+## 🤝 Contributing
+We welcome contributions! Please follow these steps:
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Submit a pull request
 
-## Contributing
+## 📱 Connect With Us
+* [Instagram](https://www.instagram.com/shveina_rota)
+* [Facebook](https://www.facebook.com/profile.php?id=100083407995435)
+* [Telegram](https://t.me/shveina_rota)
+* [Twitter](https://twitter.com/ShveinaRota)
 
-Contributions are welcome! To contribute:
+## 💝 Support Our Mission
+* MonoBank: 5375 4112 0381 7304
+* [PayPal](mailto:marishka.polo@gmail.com)
+* [Support Link](https://send.monobank.ua/jar/5VV7zhDJGY)
 
-1. Fork the repository.
-2. Create a new branch (`feature/your-feature`).
-3. Commit your changes.
-4. Push to the branch.
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-Created by [Yehor Myropoltsev](https://github.com/yegormi) - feel free to reach out!
+## 📄 License
+This project is licensed under the MIT License.
