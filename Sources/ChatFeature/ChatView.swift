@@ -1,6 +1,5 @@
 import ComposableArchitecture
 import Foundation
-import SettingsFeature
 import SharedModels
 import Styleguide
 import SwiftUI
@@ -26,7 +25,6 @@ public struct ChatView: View {
             self.messageInput
         }
         .padding(.horizontal, 20)
-        .background(Color.tabBackground)
     }
 
     private var chatContent: some View {
@@ -76,7 +74,7 @@ public struct ChatView: View {
             TextField("Write a message...", text: self.$store.messageText, axis: .vertical)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .background(Color(uiColor: .systemGroupedBackground))
+                .background(Color.tabBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .focused(self.$isFocused)
 

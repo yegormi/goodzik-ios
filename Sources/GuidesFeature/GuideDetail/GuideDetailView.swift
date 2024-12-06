@@ -86,6 +86,7 @@ public struct GuideDetailView: View {
                                     action: \.chat
                                 )
                             )
+                            .frame(height: 300)
                             .frame(maxWidth: .infinity)
                         }
                     }

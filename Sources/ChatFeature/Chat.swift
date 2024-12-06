@@ -3,7 +3,6 @@ import ComposableArchitecture
 import Foundation
 import OSLog
 import SessionClient
-import SettingsFeature
 import SharedModels
 
 @Reducer
@@ -14,12 +13,12 @@ public struct Chat: Reducer {
         var messageText = ""
 
         public init() {
-            self.messages = [
-                Message(text: "I've been thinking about going on a trip. Would you be interested?", isFromCurrentUser: false),
-                Message(text: "Where were you thinking of going?", isFromCurrentUser: true),
-                Message(text: "Maybe somewhere we haven't been before?", isFromCurrentUser: false),
-                Message(text: "Definitely 🤩👌", isFromCurrentUser: true),
-            ]
+//            self.messages = [
+//                Message(text: "I've been thinking about going on a trip. Would you be interested?", isFromCurrentUser: false),
+//                Message(text: "Where were you thinking of going?", isFromCurrentUser: true),
+//                Message(text: "Maybe somewhere we haven't been before?", isFromCurrentUser: false),
+//                Message(text: "Definitely 🤩👌", isFromCurrentUser: true),
+//            ]
         }
     }
 

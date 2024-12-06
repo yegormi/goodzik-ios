@@ -1,6 +1,5 @@
 import ComposableArchitecture
 import Foundation
-import SettingsFeature
 import SharedModels
 import Styleguide
 import SwiftUI
