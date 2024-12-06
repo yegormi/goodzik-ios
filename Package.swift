@@ -17,6 +17,7 @@ let package = Package(
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AuthFeature", targets: ["AuthFeature"]),
         .library(name: "ChatFeature", targets: ["ChatFeature"]),
+        .library(name: "DonateFeature", targets: ["DonateFeature"]),
         .library(name: "GuidesFeature", targets: ["GuidesFeature"]),
         .library(name: "KeychainClient", targets: ["KeychainClient"]),
         .library(name: "NewsFeature", targets: ["NewsFeature"]),
@@ -126,6 +127,20 @@ let package = Package(
             ]
         ),
         .target(
+            name: "DonateFeature",
+            dependencies: [
+                "APIClient",
+                "SessionClient",
+                "SharedModels",
+                "Styleguide",
+                "SwiftUIHelpers",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        .target(
             name: "GuidesFeature",
             dependencies: [
                 "APIClient",
@@ -218,6 +233,7 @@ let package = Package(
             name: "TabsFeature",
             dependencies: [
                 "AccountFeature",
+                "DonateFeature",
                 "GuidesFeature",
                 "NewsFeature",
                 "Styleguide",

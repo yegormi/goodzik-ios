@@ -1,5 +1,6 @@
 import AccountFeature
 import ComposableArchitecture
+import DonateFeature
 import GuidesFeature
 import NewsFeature
 import SwiftUI
