@@ -6,9 +6,9 @@ import SessionClient
 import SharedModels
 
 @Reducer
-public struct Chat: Reducer {
+public struct Chat: Reducer, Sendable {
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         var messages: [Message] = []
         var messageText = ""
 

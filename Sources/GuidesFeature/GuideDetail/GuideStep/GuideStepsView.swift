@@ -18,7 +18,7 @@ public struct GuideStepsView: View {
                 get: { self.store.currentIndex },
                 set: { send(.pageChanged($0)) }
             )) {
-                ForEach(Array(self.store.steps.enumerated()), id: \.element.id) { index, step in
+                ForEach(Array(self.store.steps.enumerated()), id: \.element.order) { index, step in
                     StepView(step: step)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .padding(.bottom, 70)

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Message: Equatable, Identifiable {
+public struct Message: Equatable, Identifiable, Sendable {
     public let id: UUID
     let text: String
     let date: Date

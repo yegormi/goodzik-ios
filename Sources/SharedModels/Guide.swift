@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Guide: Identifiable, Equatable {
+public struct Guide: Identifiable, Equatable, Sendable {
     public let id: String
     public let title: String
     public let description: String

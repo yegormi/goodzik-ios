@@ -7,12 +7,13 @@ import SharedModels
 @Reducer
 public struct GuideDetail: Reducer, Sendable {
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         @Presents var destination: Destination.State?
-//        var guide: GuideDetails
         var guide: Guide
         var isNextButtonVisible = true
         var chat = Chat.State()
+
+        var guideDetails: GuideDetails?
 
         public init(guide: Guide) {
             self.guide = guide
@@ -32,6 +33,7 @@ public struct GuideDetail: Reducer, Sendable {
 
         public enum Internal {
             case handleScroll(CGFloat)
+            case guideDetailsResponse(Result<GuideDetails, Error>)
         }
 
         public enum View: BindableAction {
@@ -44,7 +46,7 @@ public struct GuideDetail: Reducer, Sendable {
         }
     }
 
-    @Reducer(state: .equatable)
+    @Reducer(state: .equatable, .sendable)
     public enum Destination {
         case guideSteps(GuideSteps)
         case chat(Chat)
@@ -77,11 +79,20 @@ public struct GuideDetail: Reducer, Sendable {
                 state.isNextButtonVisible = offset > -10
                 return .none
 
+            case let .internal(.guideDetailsResponse(result)):
+                switch result {
+                case let .success(details):
+                    state.guideDetails = details
+                case .failure:
+                    break
+                }
+                return .none
+
             case .view(.binding):
                 return .none
 
             case .view(.onFirstAppear):
-                return .none
+                return self.fetchGuideDetails(&state)
 
             case .view(.onAppear):
                 return .none
@@ -91,9 +102,11 @@ public struct GuideDetail: Reducer, Sendable {
                 return .none
 
             case .view(.nextButtonTapped):
-                state.destination = .guideSteps(GuideSteps.State(
-                    steps: GuideDetails.Step.mocks
-                ))
+                guard let steps = state.guideDetails?.steps else {
+                    return .none
+                }
+
+                state.destination = .guideSteps(GuideSteps.State(steps: steps))
                 return .none
 
             case let .view(.handleScroll(offset)):
@@ -104,5 +117,13 @@ public struct GuideDetail: Reducer, Sendable {
             }
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+
+    private func fetchGuideDetails(_ state: inout State) -> Effect<Action> {
+        .run { [state] send in
+            await send(.internal(.guideDetailsResponse(Result {
+                try await self.api.getGuide(state.guide.id)
+            })))
+        }
     }
 }
