@@ -101,20 +101,20 @@ private struct TabBarButton: View {
             ZStack {
                 if self.isSelected {
                     Circle()
-                        .fill(.black)
+                        .fill(Color.accentColor)
+                        .frame(maxWidth: 50, maxHeight: 50)
                         .matchedGeometryEffect(id: "background_circle", in: self.namespace)
-                        .frame(width: 50, height: 50)
                 }
 
                 self.item.image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
+                    .frame(maxWidth: 20, maxHeight: 20)
+                    .padding(15)
+                    .contentShape(Rectangle())
                     .foregroundColor(self.isSelected ? .white : .black)
                     .animation(.spring(response: 0.3, dampingFraction: 0.7), value: self.isSelected)
-                    .padding(30)
             }
-            .frame(width: 50, height: 50)
         }
         .buttonStyle(.plain)
     }

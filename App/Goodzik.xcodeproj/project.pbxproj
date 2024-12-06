@@ -274,7 +274,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = MRBGL97LQU;
+				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Allow tracking to personalize your experience and show relevant content. Your data is protected as per our Privacy Policy.";
@@ -307,7 +307,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = MRBGL97LQU;
+				DEVELOPMENT_TEAM = RX5QFP6Q25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Allow tracking to personalize your experience and show relevant content. Your data is protected as per our Privacy Policy.";
