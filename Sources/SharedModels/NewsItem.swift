@@ -4,7 +4,7 @@
 //
 import Foundation
 
-public struct News: Equatable, Identifiable {
+public struct NewsItem: Equatable, Identifiable, Sendable {
     public let id: String
     public let title: String
     public let date: Date
@@ -18,7 +18,7 @@ public struct News: Equatable, Identifiable {
         title: String,
         date: Date,
         description: String,
-        categories: [Category],
+        categories: [Category] = [],
         imageURls: [URL]? = nil,
         author: String
     ) {
@@ -32,7 +32,7 @@ public struct News: Equatable, Identifiable {
     }
 }
 
-public extension News {
+public extension NewsItem {
     static var mock: Self {
         .init(
             id: UUID().uuidString,

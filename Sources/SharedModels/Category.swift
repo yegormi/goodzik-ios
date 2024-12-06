@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Category: Identifiable, Equatable {
+public struct Category: Identifiable, Equatable, Sendable {
     public let id: String
     public let name: String
 }

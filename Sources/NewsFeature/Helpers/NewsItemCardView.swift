@@ -3,31 +3,21 @@ import SwiftUI
 import SwiftUIHelpers
 
 public struct NewsCardView: View {
-    public let item: News
+    public let item: NewsItem
 
-    public init(item: News) {
+    public init(item: NewsItem) {
         self.item = item
     }
 
     public var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
-                if let imageURL = item.imageURls?.first {
-                    AsyncImage(url: imageURL) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
-                        Color.gray.opacity(0.2)
-                    }
-                    .frame(width: 56, height: 56)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                } else {
-                    Image(.newsIcon)
-                }
+                Image(.newsIcon)
+                    .resizable()
+                    .frame(width: 55, height: 55)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(self.item.title)
+                    Text(self.item.author)
                         .font(.system(size: 18, weight: .semibold))
 
                     Text(self.item.date.formatted(date: .numeric, time: .omitted))

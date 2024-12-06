@@ -12,7 +12,7 @@ public struct APIClient: Sendable {
     public var getCurrentUser: @Sendable () async throws -> User
 
     // News
-    public var getNews: @Sendable () async throws -> [News]
+    public var getNews: @Sendable () async throws -> [NewsItem]
 
     // Guides
     public var createGuide: @Sendable (CreateGuideRequest) async throws -> Guide

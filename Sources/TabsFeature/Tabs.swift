@@ -9,7 +9,7 @@ import SwiftUI
 public struct Tabs: Reducer {
     @ObservableState
     public struct State: Equatable {
-        var tab = Tab.news
+        var tab = Tab.guides
         var guides = Guides.State()
         var news = NewsFeature.State()
         var account = Account.State()

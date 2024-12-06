@@ -7,9 +7,9 @@ import SharedModels
 public struct NewsDetail: Reducer {
     @ObservableState
     public struct State: Equatable {
-        var item: News
+        var item: NewsItem
 
-        public init(item: News) {
+        public init(item: NewsItem) {
             self.item = item
         }
     }

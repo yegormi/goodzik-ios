@@ -99,7 +99,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewsResponseDto'
+                type: array
+                items:
+                  $ref: '#/components/schemas/NewsDto'
         '400':
           description: ''
           content:

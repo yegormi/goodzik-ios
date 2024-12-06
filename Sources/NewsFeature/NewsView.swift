@@ -26,8 +26,9 @@ public struct NewsView: View {
                     }
                 }
             }
-            .padding(20)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .contentMargins(.all, 20, for: .scrollContent)
         .navigationDestination(
             item: self.$store.scope(
                 state: \.destination?.newsDetail,

@@ -7,7 +7,7 @@ public struct NewsFeature: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
         @Presents var destination: Destination.State?
-        var newsItems: [News]?
+        var newsItems: [NewsItem]?
 
         public init() {}
     }
@@ -21,13 +21,13 @@ public struct NewsFeature: Reducer, Sendable {
         public enum Delegate {}
 
         public enum Internal {
-            case fetchNewsResponse(Result<[News], Error>)
+            case fetchNewsResponse(Result<[NewsItem], Error>)
         }
 
         public enum View: Equatable, BindableAction {
             case binding(BindingAction<NewsFeature.State>)
             case onAppear
-            case newsItemTapped(News)
+            case newsItemTapped(NewsItem)
         }
     }
 

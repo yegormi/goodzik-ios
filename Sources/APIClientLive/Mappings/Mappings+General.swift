@@ -49,8 +49,8 @@ extension Components.Schemas.GuideStepDto {
 }
 
 extension Components.Schemas.NewsDto {
-    func toDomain() throws -> News {
-        try News(
+    func toDomain() throws -> NewsItem {
+        try NewsItem(
             id: self.id,
             title: self.title,
             date: self.date,

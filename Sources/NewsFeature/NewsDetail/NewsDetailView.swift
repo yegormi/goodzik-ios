@@ -33,7 +33,9 @@ public struct NewsDetailView: View {
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                self.categoriesView
+                if !self.store.item.categories.isEmpty {
+                    self.categoriesView
+                }
             }
             .padding(20)
         }

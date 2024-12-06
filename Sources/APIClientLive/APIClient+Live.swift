@@ -73,7 +73,6 @@ extension APIClient: DependencyKey {
                         .ok
                         .body
                         .json
-                        .news
                         .map { try $0.toDomain() }
                 }
             },
