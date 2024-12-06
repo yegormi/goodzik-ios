@@ -11,7 +11,7 @@ public struct Tabs: Reducer {
     public struct State: Equatable {
         var tab = Tab.news
         var guides = Guides.State()
-        var news = News.State()
+        var news = NewsFeature.State()
         var account = Account.State()
         var donate = Donate.State()
 
@@ -27,7 +27,7 @@ public struct Tabs: Reducer {
 
     public enum Action: ViewAction {
         case guides(Guides.Action)
-        case news(News.Action)
+        case news(NewsFeature.Action)
         case donate(Donate.Action)
         case account(Account.Action)
 
@@ -49,7 +49,7 @@ public struct Tabs: Reducer {
         }
 
         Scope(state: \.news, action: \.news) {
-            News()
+            NewsFeature()
         }
 
         Scope(state: \.donate, action: \.donate) {

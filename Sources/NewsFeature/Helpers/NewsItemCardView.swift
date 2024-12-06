@@ -2,10 +2,10 @@ import SharedModels
 import SwiftUI
 import SwiftUIHelpers
 
-public struct NewsItemCardView: View {
-    public let item: NewsItem
+public struct NewsCardView: View {
+    public let item: News
 
-    public init(item: NewsItem) {
+    public init(item: News) {
         self.item = item
     }
 

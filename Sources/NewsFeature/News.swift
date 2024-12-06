@@ -3,24 +3,13 @@ import Foundation
 import SharedModels
 
 @Reducer
-public struct News: Reducer {
+public struct NewsFeature: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
         @Presents var destination: Destination.State?
-        var newsItems: [NewsItem]
+        var newsItems: [News]?
 
-        public init() {
-            self.newsItems = Array(repeating: NewsItem.mock, count: 10).map {
-                NewsItem(
-                    id: UUID(),
-                    title: $0.title,
-                    date: $0.date,
-                    description: $0.description,
-                    categories: $0.categories,
-                    imageURls: $0.imageURls
-                )
-            }
-        }
+        public init() {}
     }
 
     public enum Action: ViewAction {
@@ -29,12 +18,16 @@ public struct News: Reducer {
         case `internal`(Internal)
         case view(View)
 
-        public enum Delegate: Equatable {}
-        public enum Internal: Equatable {}
+        public enum Delegate {}
+
+        public enum Internal {
+            case fetchNewsResponse(Result<[News], Error>)
+        }
+
         public enum View: Equatable, BindableAction {
-            case binding(BindingAction<News.State>)
+            case binding(BindingAction<NewsFeature.State>)
             case onAppear
-            case newsItemTapped(NewsItem)
+            case newsItemTapped(News)
         }
     }
 
@@ -42,6 +35,8 @@ public struct News: Reducer {
     public enum Destination {
         case newsDetail(NewsDetail)
     }
+
+    @Dependency(\.apiClient) var api
 
     public init() {}
 
@@ -56,14 +51,21 @@ public struct News: Reducer {
             case .destination:
                 return .none
 
-            case .internal:
+            case let .internal(.fetchNewsResponse(result)):
+                switch result {
+                case let .success(news):
+                    state.newsItems = news
+                case .failure:
+                    break
+                }
+
                 return .none
 
             case .view(.binding):
                 return .none
 
             case .view(.onAppear):
-                return .none
+                return self.fetchNews(&state)
 
             case let .view(.newsItemTapped(item)):
                 state.destination = .newsDetail(NewsDetail.State(item: item))
@@ -71,5 +73,13 @@ public struct News: Reducer {
             }
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+
+    private func fetchNews(_: inout State) -> Effect<Action> {
+        .run { send in
+            await send(.internal(.fetchNewsResponse(Result {
+                try await self.api.getNews()
+            })))
+        }
     }
 }

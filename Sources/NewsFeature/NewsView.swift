@@ -4,24 +4,26 @@ import Styleguide
 import SwiftUI
 import SwiftUIHelpers
 
-@ViewAction(for: News.self)
+@ViewAction(for: NewsFeature.self)
 public struct NewsView: View {
-    @Bindable public var store: StoreOf<News>
+    @Bindable public var store: StoreOf<NewsFeature>
 
-    public init(store: StoreOf<News>) {
+    public init(store: StoreOf<NewsFeature>) {
         self.store = store
     }
 
     public var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                ForEach(self.store.newsItems) { item in
-                    Button {
-                        send(.newsItemTapped(item))
-                    } label: {
-                        NewsItemCardView(item: item)
+                if let items = self.store.newsItems {
+                    ForEach(items) { item in
+                        Button {
+                            send(.newsItemTapped(item))
+                        } label: {
+                            NewsCardView(item: item)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .padding(20)
@@ -44,7 +46,7 @@ public struct NewsView: View {
 }
 
 #Preview {
-    NewsView(store: Store(initialState: News.State()) {
-        News()
+    NewsView(store: Store(initialState: NewsFeature.State()) {
+        NewsFeature()
     })
 }

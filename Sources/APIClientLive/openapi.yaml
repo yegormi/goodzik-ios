@@ -88,17 +88,10 @@ paths:
         - bearer: []
   /news:
     get:
-      operationId: NewsController_getNews
-      parameters: []
-      responses:
-        '200':
-          description: ''
-  /admin/me:
-    get:
-      operationId: getMe as admin
-      summary: Get the current admin
+      operationId: getNews
+      summary: News
       tags:
-        - admin
+        - news
       parameters: []
       responses:
         '200':
@@ -106,7 +99,33 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginRequestDto'
+                $ref: '#/components/schemas/NewsResponseDto'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+  /guides:
+    post:
+      operationId: createGuide
+      summary: Create a guide
+      tags:
+        - guide
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGuideDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideDto'
         '401':
           description: ''
           content:
@@ -115,38 +134,730 @@ paths:
                 $ref: '#/components/schemas/ApiErrorDto'
       security:
         - bearer: []
-  /admin/login:
-    post:
-      operationId: admin login
-      summary: Log in as admin
+    get:
+      operationId: getGuides
+      summary: Get guides
       tags:
-        - admin
+        - guide
       parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginRequestDto'
       responses:
         '200':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginRequestDto'
-        '400':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiErrorDto'
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuideDto'
         '401':
           description: ''
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiErrorDto'
+  /guides/{id}:
+    get:
+      operationId: getGuide
+      summary: Get a guide
+      tags:
+        - guide
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+    put:
+      operationId: updateGuide
+      summary: Update a guide
+      tags:
+        - guide
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGuideDto'
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    delete:
+      operationId: deleteGuide
+      summary: Delete a guide
+      tags:
+        - guide
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+  /guide-categories:
+    post:
+      operationId: createGuideCategory
+      summary: Create a guide category
+      tags:
+        - guide-category
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGuideCategoryDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideCategoryDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    get:
+      operationId: getGuideCategories
+      summary: Get all guide categories
+      tags:
+        - guide-category
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuideCategoryDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+  /guide-categories/{id}:
+    get:
+      operationId: getGuideCategory
+      summary: Get a guide category
+      tags:
+        - guide-category
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideCategoryDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    put:
+      operationId: updateGuideCategory
+      summary: Update a guide category
+      tags:
+        - guide-category
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGuideCategoryDto'
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    delete:
+      operationId: deleteGuideCategory
+      summary: Delete a guide category
+      tags:
+        - guide-category
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+  /guide-steps:
+    post:
+      operationId: createGuideStep
+      summary: Create a guide step
+      tags:
+        - guide-step
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGuideStepDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideStepDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    get:
+      operationId: getGuideSteps
+      summary: Get all guide steps
+      tags:
+        - guide-step
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuideStepDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+  /guide-steps/{id}:
+    get:
+      operationId: getGuideStep
+      summary: Get a guide step
+      tags:
+        - guide-step
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideStepDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    put:
+      operationId: updateGuideStep
+      summary: Update a guide step
+      tags:
+        - guide-step
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGuideStepDto'
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    delete:
+      operationId: deleteGuideStep
+      summary: Delete a guide step
+      tags:
+        - guide-step
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+  /partners:
+    post:
+      operationId: createPartner
+      summary: Create a Partner
+      tags:
+        - partner
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePartnerDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartnerDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    get:
+      operationId: getPartners
+      summary: Get Partners
+      tags:
+        - partner
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartnerDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+  /partners/{id}:
+    get:
+      operationId: getPartner
+      summary: Get a Partner
+      tags:
+        - partner
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartnerDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+    put:
+      operationId: updatePartner
+      summary: Update a Partner
+      tags:
+        - partner
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePartnerDto'
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    delete:
+      operationId: deletePartner
+      summary: Delete a Partner
+      tags:
+        - partner
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+  /team-members:
+    post:
+      operationId: createTeamMember
+      summary: Create a team member
+      tags:
+        - team-member
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamMemberDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    get:
+      operationId: getTeamMembers
+      summary: Get team members
+      tags:
+        - team-member
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamMemberDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+  /team-members/{id}:
+    get:
+      operationId: getTeamMember
+      summary: Get a team member
+      tags:
+        - team-member
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+    put:
+      operationId: updateTeamMember
+      summary: Update a team member
+      tags:
+        - team-member
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamMemberDto'
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    delete:
+      operationId: deleteTeamMember
+      summary: Delete a team member
+      tags:
+        - team-member
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+  /locations:
+    post:
+      operationId: createLocation
+      summary: Create a location
+      tags:
+        - location
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLocationDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    get:
+      operationId: getLocations
+      summary: Get locations
+      tags:
+        - location
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocationDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+  /locations/{id}:
+    get:
+      operationId: getLocation
+      summary: Get a location
+      tags:
+        - location
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+    put:
+      operationId: updateLocation
+      summary: Update a location
+      tags:
+        - location
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLocationDto'
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    delete:
+      operationId: deleteLocation
+      summary: Delete a location
+      tags:
+        - location
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
 info:
   title: Goodzik API
   description: ''
@@ -196,7 +907,9 @@ components:
           description: Role of the user
       required:
         - id
+        - userName
         - email
+        - role
     SignupResponseDto:
       type: object
       properties:
@@ -255,3 +968,287 @@ components:
       required:
         - accessToken
         - user
+    NewsDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '1111'
+          description: The id of the news
+        title:
+          type: string
+          example: new item
+          description: Title of the news
+        image:
+          description: Images from news
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+          description: Text of news
+        author:
+          type: string
+          example: makson10
+          description: Author of the news
+        date:
+          format: date-time
+          type: string
+          description: Date of the news
+      required:
+        - id
+        - title
+        - image
+        - description
+        - author
+        - date
+    NewsResponseDto:
+      type: object
+      properties:
+        news:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewsDto'
+      required:
+        - news
+    CreateGuideDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        videoUrl:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - description
+        - imageUrl
+        - videoUrl
+        - categories
+    GuideDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          format: date-time
+          type: string
+        imageUrl:
+          type: string
+        videoUrl:
+          type: string
+      required:
+        - id
+        - title
+        - description
+        - date
+        - imageUrl
+        - videoUrl
+    UpdateGuideDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        videoUrl:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+    CreateGuideCategoryDto:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    GuideCategoryDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    UpdateGuideCategoryDto:
+      type: object
+      properties:
+        name:
+          type: string
+    CreateGuideStepDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        order:
+          type: number
+      required:
+        - name
+        - description
+        - image
+        - order
+    GuideStepDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        order:
+          type: number
+      required:
+        - id
+        - name
+        - description
+        - image
+        - order
+    UpdateGuideStepDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        order:
+          type: number
+    CreatePartnerDto:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    PartnerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    UpdatePartnerDto:
+      type: object
+      properties:
+        name:
+          type: string
+    CreateTeamMemberDto:
+      type: object
+      properties:
+        fullName:
+          type: string
+        imageUrl:
+          type: string
+        position:
+          type: string
+      required:
+        - fullName
+        - imageUrl
+        - position
+    TeamMemberDto:
+      type: object
+      properties:
+        id:
+          type: string
+        fullName:
+          type: string
+        imageUrl:
+          type: string
+        position:
+          type: string
+      required:
+        - id
+        - fullName
+        - imageUrl
+        - position
+    UpdateTeamMemberDto:
+      type: object
+      properties:
+        fullName:
+          type: string
+        imageUrl:
+          type: string
+        position:
+          type: string
+    CreateLocationDto:
+      type: object
+      properties:
+        title:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        contactFullName:
+          type: string
+        contactPhoneNumber:
+          type: string
+      required:
+        - title
+        - lat
+        - lng
+        - contactFullName
+        - contactPhoneNumber
+    LocationDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        contactFullName:
+          type: string
+        contactPhoneNumber:
+          type: string
+      required:
+        - id
+        - title
+        - lat
+        - lng
+        - contactFullName
+        - contactPhoneNumber
+    UpdateLocationDto:
+      type: object
+      properties:
+        title:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        contactFullName:
+          type: string
+        contactPhoneNumber:
+          type: string
