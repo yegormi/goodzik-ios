@@ -6,10 +6,9 @@ struct InvalidURLError: Error {}
 
 extension URL {
     init(validating stringURL: String) throws {
-        guard let components = URLComponents(string: stringURL) else {
+        guard let url = URL(string: stringURL) else {
             throw InvalidURLError()
         }
-        guard let url = components.url else { throw InvalidURLError() }
         self = url
     }
 }

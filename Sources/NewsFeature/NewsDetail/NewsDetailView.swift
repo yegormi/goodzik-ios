@@ -15,7 +15,7 @@ public struct NewsDetailView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                if let urls = self.store.item.imageURls {
+                if let urls = self.store.item.imageURls, !urls.isEmpty {
                     ImageCarouselView(imageURLs: urls)
                 }
 

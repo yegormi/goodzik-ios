@@ -43,7 +43,9 @@ public struct NewsFeature: Reducer, Sendable {
     public var body: some ReducerOf<Self> {
         BindingReducer(action: \.view)
 
-        Reduce { state, action in
+        Reduce {
+            state,
+                action in
             switch action {
             case .delegate:
                 return .none
