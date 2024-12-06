@@ -10,7 +10,7 @@ public struct NewsItem: Equatable, Identifiable {
     public let date: Date
     public let description: String
     public let categories: [Category]
-    public let imageURL: URL?
+    public let imageURls: [URL]?
 
     public init(
         id: UUID = UUID(),
@@ -18,14 +18,14 @@ public struct NewsItem: Equatable, Identifiable {
         date: Date,
         description: String,
         categories: [Category],
-        imageURL: URL? = nil
+        imageURls: [URL]? = nil
     ) {
         self.id = id
         self.title = title
         self.date = date
         self.description = description
         self.categories = categories
-        self.imageURL = imageURL
+        self.imageURls = imageURls
     }
 }
 
@@ -35,7 +35,12 @@ public extension NewsItem {
             title: "Sew gathering in Kiev",
             date: Date(),
             description: "Learn how to sew linen with ease using our step-by-step guide. From selecting the right fabric to mastering essential...",
-            categories: [.socks, .underwear]
+            categories: [.socks, .underwear],
+            imageURls: [
+                URL(string: "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194138/image-url-3.jpg")!,
+                URL(string: "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194138/image-url-3.jpg")!,
+                URL(string: "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194138/image-url-3.jpg")!,
+            ]
         )
     }
 }

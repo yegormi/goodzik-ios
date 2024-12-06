@@ -15,16 +15,8 @@ public struct NewsDetailView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                if let imageURL = self.store.item.imageURL {
-                    AsyncImage(url: imageURL) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
-                        Color.gray.opacity(0.2)
-                    }
-                    .frame(height: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                if let urls = self.store.item.imageURls {
+                    ImageCarouselView(imageURLs: urls)
                 }
 
                 Text(self.store.item.title)

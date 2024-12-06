@@ -12,7 +12,7 @@ public struct NewsItemCardView: View {
     public var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
-                if let imageURL = item.imageURL {
+                if let imageURL = item.imageURls?.first {
                     AsyncImage(url: imageURL) { image in
                         image
                             .resizable()

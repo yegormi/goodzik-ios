@@ -17,7 +17,7 @@ public struct News: Reducer {
                     date: $0.date,
                     description: $0.description,
                     categories: $0.categories,
-                    imageURL: $0.imageURL
+                    imageURls: $0.imageURls
                 )
             }
         }
