@@ -1,10 +1,14 @@
 import SwiftUI
 
-struct ImageCarouselView: View {
-    let imageURLs: [URL]
+public struct ImageCarouselView: View {
+    public let imageURLs: [URL]
     @State private var currentIndex = 0
 
-    var body: some View {
+    public init(imageURLs: [URL]) {
+        self.imageURLs = imageURLs
+    }
+
+    public var body: some View {
         TabView(selection: self.$currentIndex) {
             ForEach(Array(self.imageURLs.enumerated()), id: \.element) { _, url in
                 GeometryReader { geometry in

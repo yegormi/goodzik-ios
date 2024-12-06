@@ -22,7 +22,6 @@ let package = Package(
         .library(name: "KeychainClient", targets: ["KeychainClient"]),
         .library(name: "NewsFeature", targets: ["NewsFeature"]),
         .library(name: "SessionClient", targets: ["SessionClient"]),
-        .library(name: "SettingsFeature", targets: ["SettingsFeature"]),
         .library(name: "SharedModels", targets: ["SharedModels"]),
         .library(name: "SplashFeature", targets: ["SplashFeature"]),
         .library(name: "Styleguide", targets: ["Styleguide"]),
@@ -38,6 +37,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.6.2"),
         .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", from: "1.1.1"),
         .package(url: "https://github.com/pointfreeco/swift-tagged", from: "0.10.0"),
+        .package(url: "https://github.com/SvenTiigi/YouTubePlayerKit", from: "1.9.0"),
     ],
     targets: [
         .target(
@@ -45,7 +45,6 @@ let package = Package(
             dependencies: [
                 "APIClient",
                 "SessionClient",
-                "SettingsFeature",
                 "SharedModels",
                 "Styleguide",
                 "SwiftUIHelpers",
@@ -116,7 +115,6 @@ let package = Package(
             dependencies: [
                 "APIClient",
                 "SessionClient",
-                "SettingsFeature",
                 "SharedModels",
                 "Styleguide",
                 "SwiftUIHelpers",
@@ -150,6 +148,7 @@ let package = Package(
                 "SwiftHelpers",
                 "SwiftUIHelpers",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "YouTubePlayerKit", package: "YouTubePlayerKit"),
             ],
             resources: [
                 .process("Resources")
@@ -183,18 +182,6 @@ let package = Package(
                 "SharedModels",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
-            ]
-        ),
-        .target(
-            name: "SettingsFeature",
-            dependencies: [
-                "APIClient",
-                "AppearanceClient",
-                "SessionClient",
-                "SharedModels",
-                "Styleguide",
-                "SwiftUIHelpers",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(

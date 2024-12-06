@@ -4,24 +4,26 @@ import SharedModels
 
 struct InvalidURLError: Error {}
 
-extension URL {
-    init(validating stringURL: String) throws {
+extension URL? {
+    init(validating stringURL: String) {
         guard let url = URL(string: stringURL) else {
-            throw InvalidURLError()
+            self = nil
+            return
         }
         self = url
     }
 }
 
 extension Components.Schemas.GuideDto {
-    func toDomain() throws -> Guide {
-        try Guide(
+    func toDomain() -> Guide {
+        Guide(
             id: self.id,
             title: self.title,
             description: self.description,
             date: self.date,
-            imageURL: .init(validating: self.imageUrl),
-            videoURL: .init(validating: self.videoUrl)
+            videoURL: .init(validating: self.videoUrl),
+            exampleImageURLs: self.exampleImages.compactMap { .init(validating: $0) },
+            author: self.author.toDomain()
         )
     }
 }
@@ -36,10 +38,10 @@ extension Components.Schemas.GuideCategoryDto {
 }
 
 extension Components.Schemas.GuideStepDto {
-    func toDomain() throws -> GuideStep {
-        try GuideStep(
+    func toDomain() -> GuideDetails.Step {
+        GuideDetails.Step(
             id: self.id,
-            title: self.name,
+            name: self.name,
             description: self.description,
             imageURL: .init(validating: self.image),
             order: Int(self.order)
@@ -47,74 +49,30 @@ extension Components.Schemas.GuideStepDto {
     }
 }
 
+extension Components.Schemas.GuideDetailsDto {
+    func toDomain() -> GuideDetails {
+        GuideDetails(
+            id: self.id,
+            title: self.title,
+            description: self.description,
+            date: self.date,
+            imageURLs: self.exampleImages.compactMap { .init(validating: $0) },
+            videoURL: .init(validating: self.videoUrl),
+            steps: self.steps.map { $0.toDomain() }
+        )
+    }
+}
+
 extension Components.Schemas.NewsDto {
-    func toDomain() throws -> NewsItem {
-        try NewsItem(
+    func toDomain() -> NewsItem {
+        NewsItem(
             id: self.id,
             title: self.title,
             date: self.date,
             description: self.description,
             categories: [],
-            imageURls: self.image.map { try .init(validating: $0) },
+            imageURls: self.image.compactMap { .init(validating: $0) },
             author: self.author
-        )
-    }
-}
-
-extension CreateGuideRequest {
-    func toAPI() -> Components.Schemas.CreateGuideDto {
-        .init(
-            title: self.title,
-            description: self.description,
-            imageUrl: self.imageUrl,
-            videoUrl: self.videoUrl,
-            categories: self.categories
-        )
-    }
-}
-
-extension UpdateGuideRequest {
-    func toAPI() -> Components.Schemas.UpdateGuideDto {
-        .init(
-            title: self.title,
-            description: self.description,
-            imageUrl: self.imageUrl,
-            videoUrl: self.videoUrl,
-            categories: self.categories
-        )
-    }
-}
-
-extension CreateGuideCategoryRequest {
-    func toAPI() -> Components.Schemas.CreateGuideCategoryDto {
-        .init(name: self.name)
-    }
-}
-
-extension UpdateGuideCategoryRequest {
-    func toAPI() -> Components.Schemas.UpdateGuideCategoryDto {
-        .init(name: self.name)
-    }
-}
-
-extension CreateGuideStepRequest {
-    func toAPI() -> Components.Schemas.CreateGuideStepDto {
-        .init(
-            name: self.name,
-            description: self.description,
-            image: self.image,
-            order: Double(self.order)
-        )
-    }
-}
-
-extension UpdateGuideStepRequest {
-    func toAPI() -> Components.Schemas.UpdateGuideStepDto {
-        .init(
-            name: self.name,
-            description: self.description,
-            image: self.image,
-            order: Double(self.order)
         )
     }
 }

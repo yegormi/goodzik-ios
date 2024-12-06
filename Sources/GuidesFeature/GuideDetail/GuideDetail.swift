@@ -9,8 +9,10 @@ public struct GuideDetail: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
         @Presents var destination: Destination.State?
+//        var guide: GuideDetails
         var guide: Guide
         var isNextButtonVisible = true
+        var chat = Chat.State()
 
         public init(guide: Guide) {
             self.guide = guide
@@ -22,6 +24,7 @@ public struct GuideDetail: Reducer, Sendable {
         case destination(PresentationAction<Destination.Action>)
         case `internal`(Internal)
         case view(View)
+        case chat(Chat.Action)
 
         public enum Delegate {
             case nextButtonTapped
@@ -53,6 +56,10 @@ public struct GuideDetail: Reducer, Sendable {
     public init() {}
 
     public var body: some ReducerOf<Self> {
+        Scope(state: \.chat, action: \.chat) {
+            Chat()
+        }
+
         BindingReducer(action: \.view)
 
         Reduce { state, action in
@@ -85,12 +92,15 @@ public struct GuideDetail: Reducer, Sendable {
 
             case .view(.nextButtonTapped):
                 state.destination = .guideSteps(GuideSteps.State(
-                    steps: GuideStep.mocks
+                    steps: GuideDetails.Step.mocks
                 ))
                 return .none
 
             case let .view(.handleScroll(offset)):
                 return .send(.internal(.handleScroll(offset)))
+
+            case .chat:
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)

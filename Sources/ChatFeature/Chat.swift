@@ -19,18 +19,6 @@ public struct Chat: Reducer {
                 Message(text: "Where were you thinking of going?", isFromCurrentUser: true),
                 Message(text: "Maybe somewhere we haven't been before?", isFromCurrentUser: false),
                 Message(text: "Definitely 🤩👌", isFromCurrentUser: true),
-                Message(text: "I've been thinking about going on a trip. Would you be interested?", isFromCurrentUser: false),
-                Message(text: "Where were you thinking of going?", isFromCurrentUser: true),
-                Message(text: "Maybe somewhere we haven't been before?", isFromCurrentUser: false),
-                Message(text: "Definitely 🤩👌", isFromCurrentUser: true),
-                Message(text: "I've been thinking about going on a trip. Would you be interested?", isFromCurrentUser: false),
-                Message(text: "Where were you thinking of going?", isFromCurrentUser: true),
-                Message(text: "Maybe somewhere we haven't been before?", isFromCurrentUser: false),
-                Message(text: "Definitely 🤩👌", isFromCurrentUser: true),
-                Message(text: "I've been thinking about going on a trip. Would you be interested?", isFromCurrentUser: false),
-                Message(text: "Where were you thinking of going?", isFromCurrentUser: true),
-                Message(text: "Maybe somewhere we haven't been before?", isFromCurrentUser: false),
-                Message(text: "Definitely 🤩👌", isFromCurrentUser: true),
             ]
         }
     }

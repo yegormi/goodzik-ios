@@ -5,6 +5,7 @@ import Styleguide
 import SwiftHelpers
 import SwiftUI
 import SwiftUIHelpers
+import YouTubePlayerKit
 
 @ViewAction(for: GuideDetail.self)
 public struct GuideDetailView: View {
@@ -17,30 +18,77 @@ public struct GuideDetailView: View {
     public var body: some View {
         ScrollView {
             ScrollViewReader { proxy in
-                VStack(spacing: 24) {
-                    self.imageView
-
-                    VStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Author")
-                                .font(.system(size: 14))
-                                .foregroundStyle(.secondary)
-
-                            Text(self.store.guide.title)
-                                .font(.system(size: 18, weight: .semibold))
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(spacing: 30) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(self.store.guide.title)
+                            .font(.system(size: 32, weight: .semibold))
+                            .foregroundStyle(Color.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
                         Divider()
 
-                        Text(self.store.guide.description)
-                            .font(.system(size: 16))
-                            .foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
+                        VideoPlayerView(videoURL: self.store.guide.videoURL?.absoluteString ?? "")
+                            .frame(height: 200)
+                            .frame(maxWidth: .infinity)
                     }
 
-                    Spacer(minLength: 100)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Examples of schemas")
+                            .font(.system(size: 18))
+                            .foregroundStyle(Color.primary)
+
+                        Divider()
+
+                        if let urls = self.store.guide.exampleImageURLs, !urls.isEmpty {
+                            ImageCarouselView(imageURLs: urls)
+                        }
+                    }
+
+                    VStack(spacing: 16) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Details")
+                                .font(.system(size: 18))
+                                .foregroundStyle(Color.primary)
+
+                            Divider()
+
+                            Text(self.store.guide.description)
+                                .font(.system(size: 14))
+                                .foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .multilineTextAlignment(.leading)
+                        }
+
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Author")
+                                .font(.system(size: 18))
+                                .foregroundStyle(Color.primary)
+
+                            Divider()
+
+                            Text(self.store.guide.author.username)
+                                .font(.system(size: 14))
+                                .foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .multilineTextAlignment(.leading)
+                        }
+
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Comments")
+                                .font(.system(size: 18))
+                                .foregroundStyle(Color.primary)
+
+                            Divider()
+
+                            ChatView(
+                                store: self.store.scope(
+                                    state: \.chat,
+                                    action: \.chat
+                                )
+                            )
+                            .frame(maxWidth: .infinity)
+                        }
+                    }
                 }
                 .overlay(
                     GeometryReader { proxy in
@@ -123,21 +171,6 @@ public struct GuideDetailView: View {
             send(.onAppear)
         }
     }
-
-    private var imageView: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .aspectRatio(contentMode: .fill)
-            .overlay {
-                AsyncImage(url: self.store.guide.imageURL) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    Color.gray.opacity(0.1)
-                }
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-    }
 }
 
 private struct ScrollOffsetPreferenceKey: @preconcurrency PreferenceKey {
@@ -145,5 +178,29 @@ private struct ScrollOffsetPreferenceKey: @preconcurrency PreferenceKey {
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
+    }
+}
+
+private struct VideoPlayerView: View {
+    let videoURL: String
+
+    @StateObject private var youTubePlayer: YouTubePlayer
+
+    init(videoURL: String) {
+        self.videoURL = videoURL
+        self._youTubePlayer = StateObject(wrappedValue: YouTubePlayer(stringLiteral: videoURL))
+    }
+
+    var body: some View {
+        YouTubePlayerView(self.youTubePlayer) { state in
+            switch state {
+            case .idle:
+                ProgressView()
+            case .ready:
+                EmptyView()
+            case .error:
+                Text(verbatim: "YouTube player couldn't be loaded")
+            }
+        }
     }
 }

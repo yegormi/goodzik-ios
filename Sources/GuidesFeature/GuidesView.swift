@@ -16,30 +16,36 @@ public struct GuidesView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                ForEach(self.store.guides) { guide in
-                    Button {
-                        send(.guideTapped(guide))
-                    } label: {
-                        GuideCardView(guide: guide)
+                if let guides = self.store.guides {
+                    ForEach(guides) { guide in
+                        Button {
+                            send(.guideTapped(guide))
+                        } label: {
+                            GuideCardView(guide: guide)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentMargins(.all, 20, for: .scrollContent)
-        .navigationDestination(
-            item: self.$store.scope(state: \.destination?.guideDetail, action: \.destination.guideDetail)
-        ) { store in
-            GuideDetailView(store: store)
-                .navigationTitle("Details")
-                .navigationBarTitleDisplayMode(.inline)
-                .hideTabBar(true)
-        }
         .onFirstAppear {
             send(.onFirstAppear)
         }
         .onAppear {
             send(.onAppear)
+        }
+        .navigationDestination(
+            item: self.$store.scope(
+                state: \.destination?.guideDetail,
+                action: \.destination.guideDetail
+            )
+        ) { store in
+            GuideDetailView(store: store)
+                .navigationTitle("Details")
+                .navigationBarTitleDisplayMode(.inline)
+                .hideTabBar(true)
         }
     }
 }

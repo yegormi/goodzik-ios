@@ -46,7 +46,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LoginRequestDto'
       responses:
-        '201':
+        '200':
           description: ''
           content:
             application/json:
@@ -99,9 +99,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/NewsDto'
+                $ref: '#/components/schemas/NewsResponseDto'
         '400':
           description: ''
           content:
@@ -175,7 +173,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GuideDto'
+                $ref: '#/components/schemas/GuideDetailsDto'
         '401':
           description: ''
           content:
@@ -860,8 +858,132 @@ paths:
                 $ref: '#/components/schemas/ApiErrorDto'
       security:
         - bearer: []
+  /guide-comments:
+    post:
+      operationId: createGuideComment
+      summary: Create a guide comment
+      tags:
+        - guide-comment
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGuideCommentDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideCommentDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    get:
+      operationId: getGuideComments
+      summary: Get guide comments
+      tags:
+        - guide-comment
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuideCommentDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+  /guide-comments/{id}:
+    get:
+      operationId: getGuideComment
+      summary: Get a guide comment
+      tags:
+        - guide-comment
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideCommentDto'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+    put:
+      operationId: updateGuideComment
+      summary: Update a guide comment
+      tags:
+        - guide-comment
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGuideCommentDto'
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
+    delete:
+      operationId: deleteGuideComment
+      summary: Delete a guide comment
+      tags:
+        - guide-comment
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorDto'
+      security:
+        - bearer: []
 info:
-  title: Goodzik API
+  title: Sewing Division API
   description: ''
   version: '1.0'
   contact: {}
@@ -1013,6 +1135,22 @@ components:
             $ref: '#/components/schemas/NewsDto'
       required:
         - news
+    CreateGuideStepDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        order:
+          type: number
+      required:
+        - name
+        - description
+        - image
+        - order
     CreateGuideDto:
       type: object
       properties:
@@ -1020,20 +1158,27 @@ components:
           type: string
         description:
           type: string
-        imageUrl:
-          type: string
+        exampleImages:
+          type: array
+          items:
+            type: string
         videoUrl:
           type: string
         categories:
           type: array
           items:
             type: string
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGuideStepDto'
       required:
         - title
         - description
-        - imageUrl
+        - exampleImages
         - videoUrl
         - categories
+        - steps
     GuideDto:
       type: object
       properties:
@@ -1046,17 +1191,92 @@ components:
         date:
           format: date-time
           type: string
-        imageUrl:
-          type: string
+        exampleImages:
+          type: array
+          items:
+            type: string
         videoUrl:
           type: string
+        author:
+          $ref: '#/components/schemas/UserDto'
       required:
         - id
         - title
         - description
         - date
-        - imageUrl
+        - exampleImages
         - videoUrl
+        - author
+    GuideStepDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        order:
+          type: number
+      required:
+        - id
+        - name
+        - description
+        - image
+        - order
+    GuideCommentDto:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        author:
+          type: string
+      required:
+        - id
+        - text
+        - author
+    GuideDetailsDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          format: date-time
+          type: string
+        exampleImages:
+          type: array
+          items:
+            type: string
+        videoUrl:
+          type: string
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuideStepDto'
+        author:
+          $ref: '#/components/schemas/UserDto'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuideCommentDto'
+      required:
+        - id
+        - title
+        - description
+        - date
+        - exampleImages
+        - videoUrl
+        - steps
+        - author
+        - comments
     UpdateGuideDto:
       type: object
       properties:
@@ -1064,8 +1284,10 @@ components:
           type: string
         description:
           type: string
-        imageUrl:
-          type: string
+        exampleImages:
+          type: array
+          items:
+            type: string
         videoUrl:
           type: string
         categories:
@@ -1094,41 +1316,6 @@ components:
       properties:
         name:
           type: string
-    CreateGuideStepDto:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        image:
-          type: string
-        order:
-          type: number
-      required:
-        - name
-        - description
-        - image
-        - order
-    GuideStepDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        image:
-          type: string
-        order:
-          type: number
-      required:
-        - id
-        - name
-        - description
-        - image
-        - order
     UpdateGuideStepDto:
       type: object
       properties:
@@ -1253,4 +1440,19 @@ components:
         contactFullName:
           type: string
         contactPhoneNumber:
+          type: string
+    CreateGuideCommentDto:
+      type: object
+      properties:
+        text:
+          type: string
+        guideId:
+          type: string
+      required:
+        - text
+        - guideId
+    UpdateGuideCommentDto:
+      type: object
+      properties:
+        text:
           type: string

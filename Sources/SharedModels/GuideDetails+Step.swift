@@ -1,32 +1,53 @@
+//
+//  Step.swift
+//  goodzik-ios
+//
+//  Created by Yehor Myropoltsev on 06.12.2024.
+//
 import Foundation
 
-public struct GuideStep: Equatable, Identifiable, Sendable {
-    public let id: String
-    public let title: String
-    public let description: String
-    public let imageURL: URL?
-    public let order: Int
+public extension GuideDetails {
+    struct Step: Identifiable, Equatable, Sendable {
+        public let id: String
+        public let name: String
+        public let description: String
+        public let imageURL: URL?
+        public let order: Int
 
-    public init(
-        id: String,
-        title: String,
-        description: String,
-        imageURL: URL?,
-        order: Int
-    ) {
-        self.id = id
-        self.title = title
-        self.description = description
-        self.imageURL = imageURL
-        self.order = order
+        public init(
+            id: String,
+            name: String,
+            description: String,
+            imageURL: URL?,
+            order: Int
+        ) {
+            self.id = id
+            self.name = name
+            self.description = description
+            self.imageURL = imageURL
+            self.order = order
+        }
     }
 }
 
-// Mock data
-public extension GuideStep {
-    static let mock1 = GuideStep(
+public extension GuideDetails {
+    static var mock: GuideDetails {
+        GuideDetails(
+            id: "1",
+            title: "mock",
+            description: "mock desc",
+            date: Date(),
+            imageURLs: nil,
+            videoURL: nil,
+            steps: [.mock1, .mock2, .mock3]
+        )
+    }
+}
+
+public extension GuideDetails.Step {
+    static let mock1 = GuideDetails.Step(
         id: UUID().uuidString,
-        title: "Кіберхуді",
+        name: "Кіберхуді",
         description: """
         Кіберхуді - одяг який дуже допомагає одужувати нашим хлопцям. Бо, якщо у пораненого нема одягу, в якому можна вийти на свіже повітря, то і одужання буде йти довше та важче.
 
@@ -39,9 +60,9 @@ public extension GuideStep {
         order: 1
     )
 
-    static let mock2 = GuideStep(
+    static let mock2 = GuideDetails.Step(
         id: UUID().uuidString,
-        title: "Кіберхуді",
+        name: "Кіберхуді",
         description: """
         Кіберхуді - одяг який дуже допомагає одужувати нашим хлопцям. Бо, якщо у пораненого нема одягу, в якому можна вийти на свіже повітря, то і одужання буде йти довше та важче.
 
@@ -58,9 +79,9 @@ public extension GuideStep {
         order: 2
     )
 
-    static let mock3 = GuideStep(
+    static let mock3 = GuideDetails.Step(
         id: UUID().uuidString,
-        title: "Кіберхуді",
+        name: "Кіберхуді",
         description: """
         Кіберхуді - одяг який дуже допомагає одужувати нашим хлопцям. Бо, якщо у пораненого нема одягу, в якому можна вийти на свіже повітря, то і одужання буде йти довше та важче.
 
@@ -81,7 +102,7 @@ public extension GuideStep {
         order: 3
     )
 
-    static let mocks: [GuideStep] = [
+    static let mocks: [GuideDetails.Step] = [
         .mock1, .mock2, .mock3,
     ]
 }

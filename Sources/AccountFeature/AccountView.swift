@@ -18,12 +18,12 @@ public struct AccountView: View {
         ScrollView {
             VStack(spacing: 20) {
                 VStack(spacing: 6) {
-                    Text("Username")
+                    Text(self.store.user.username)
                         .font(.system(size: 26, weight: .semibold))
                         .foregroundStyle(Color.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("mail@gmail.com")
+                    Text(self.store.user.email)
                         .font(.system(size: 14, weight: .semibold))
                         .tint(Color.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -31,20 +31,19 @@ public struct AccountView: View {
 
                 VStack(spacing: 16) {
                     MenuButton(
-                        title: "Chats history",
-                        image: .chat,
-                        tint: .primary
-                    ) { /* action */ }
-                    MenuButton(
                         title: "About us",
                         image: .aboutUs,
                         tint: .primary
-                    ) { /* action */ }
+                    ) {
+                        send(.aboutUsButtonTapped)
+                    }
                     MenuButton(
                         title: "Logout",
                         image: .logout,
                         tint: .red500
-                    ) { /* action */ }
+                    ) {
+                        send(.logoutButtonTapped)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -59,26 +58,13 @@ public struct AccountView: View {
         .onAppear {
             send(.onAppear)
         }
-//        .toolbar {
-//            ToolbarItem(placement: .topBarTrailing) {
-//                Button {
-//                    send(.settingsButtonTapped)
-//                } label: {
-//                    Image(systemName: "gearshape.fill")
-//                        .resizable()
-//                        .frame(width: 22, height: 22)
-//                        .padding(13)
-//                        .clipShape(Circle())
-//                }
-//            }
-//        }
-        .navigationDestination(
-            item: self.$store.scope(state: \.destination?.settings, action: \.destination.settings)
-        ) { store in
-            SettingsView(store: store)
-                .navigationTitle("Settings")
-                .navigationBarTitleDisplayMode(.inline)
-        }
+        .isLoading(self.store.isLoading)
+        .alert(
+            store: self.store.scope(state: \.$destination.alert, action: \.destination.alert)
+        )
+        .alert(
+            store: self.store.scope(state: \.$destination.plainAlert, action: \.destination.plainAlert)
+        )
     }
 }
 

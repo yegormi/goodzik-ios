@@ -8,12 +8,9 @@ public struct Guides: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
         @Presents var destination: Destination.State?
+        var guides: [Guide]?
 
-        var guides: [Guide]
-
-        public init() {
-            self.guides = [.underwear, .socks]
-        }
+        public init() {}
     }
 
     public enum Action: ViewAction {
@@ -24,7 +21,9 @@ public struct Guides: Reducer, Sendable {
 
         public enum Delegate {}
 
-        public enum Internal {}
+        public enum Internal {
+            case fetchGuidesResponse(Result<[Guide], Error>)
+        }
 
         public enum View: BindableAction {
             case binding(BindingAction<Guides.State>)
@@ -56,7 +55,14 @@ public struct Guides: Reducer, Sendable {
             case .destination:
                 return .none
 
-            case .internal:
+            case let .internal(.fetchGuidesResponse(result)):
+                switch result {
+                case let .success(guides):
+                    state.guides = guides
+                case .failure:
+                    break
+                }
+
                 return .none
 
             case .view(.binding):
@@ -66,7 +72,7 @@ public struct Guides: Reducer, Sendable {
                 return .none
 
             case .view(.onAppear):
-                return .none
+                return self.fetchGuides()
 
             case let .view(.guideTapped(guide)):
                 state.destination = .guideDetail(GuideDetail.State(guide: guide))
@@ -75,5 +81,13 @@ public struct Guides: Reducer, Sendable {
             }
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+
+    private func fetchGuides() -> Effect<Action> {
+        .run { send in
+            await send(.internal(.fetchGuidesResponse(Result {
+                try await self.api.getGuides()
+            })))
+        }
     }
 }

@@ -78,7 +78,7 @@ public struct GuideStepsView: View {
 }
 
 private struct StepView: View {
-    let step: GuideStep
+    let step: GuideDetails.Step
 
     var body: some View {
         ScrollView {
@@ -96,7 +96,7 @@ private struct StepView: View {
     }
 
     private var stepTitle: some View {
-        Text(self.step.title)
+        Text(self.step.name)
             .font(.system(size: 20, weight: .semibold))
     }
 

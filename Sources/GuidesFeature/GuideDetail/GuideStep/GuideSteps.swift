@@ -6,11 +6,11 @@ import SharedModels
 public struct GuideSteps: Reducer, Sendable {
     @ObservableState
     public struct State: Equatable {
-        var steps: [GuideStep]
+        var steps: [GuideDetails.Step]
         var currentIndex: Int
         var isLastStep: Bool { self.currentIndex == self.steps.count - 1 }
 
-        public init(steps: [GuideStep], currentIndex: Int = 0) {
+        public init(steps: [GuideDetails.Step], currentIndex: Int = 0) {
             self.steps = steps
             self.currentIndex = currentIndex
         }
