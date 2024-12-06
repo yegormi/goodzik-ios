@@ -33,7 +33,7 @@ public struct GuidesView: View {
             GuideDetailView(store: store)
                 .navigationTitle("Details")
                 .navigationBarTitleDisplayMode(.inline)
-                .hideTabBar()
+                .hideTabBar(true)
         }
         .onFirstAppear {
             send(.onFirstAppear)

@@ -129,6 +129,7 @@ let package = Package(
             name: "GuidesFeature",
             dependencies: [
                 "APIClient",
+                "ChatFeature",
                 "SharedModels",
                 "Styleguide",
                 "SwiftHelpers",

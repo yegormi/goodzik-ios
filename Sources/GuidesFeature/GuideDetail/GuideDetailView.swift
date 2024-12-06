@@ -1,3 +1,4 @@
+import ChatFeature
 import ComposableArchitecture
 import Foundation
 import Styleguide
@@ -41,7 +42,7 @@ public struct GuideDetailView: View {
 
                     Spacer(minLength: 100)
                 }
-                .background(
+                .overlay(
                     GeometryReader { proxy in
                         Color.clear.preference(
                             key: ScrollOffsetPreferenceKey.self,
@@ -59,22 +60,62 @@ public struct GuideDetailView: View {
         .background(Color(uiColor: .systemGroupedBackground))
         .overlay(alignment: .bottomTrailing) {
             if self.store.isNextButtonVisible {
-                Button {
-                    send(.nextButtonTapped)
-                } label: {
-                    Image(systemName: "arrow.right")
-                        .font(.system(size: 24, weight: .medium))
-                        .foregroundStyle(.white)
-                        .frame(width: 56, height: 56)
-                        .background(.black)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                HStack(spacing: 10) {
+                    Button {
+                        send(.chatButtonTapped)
+                    } label: {
+                        Image(.message)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(.white)
+                            .frame(width: 55, height: 55)
+                            .background(.black)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    .buttonStyle(.plain)
+
+                    Button {
+                        send(.nextButtonTapped)
+                    } label: {
+                        Image(systemName: "arrow.right")
+                            .font(.system(size: 24, weight: .medium))
+                            .foregroundStyle(.white)
+                            .frame(width: 55, height: 55)
+                            .background(.black)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
                 .safeAreaPadding(20)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .animation(.spring(duration: 0.3), value: self.store.isNextButtonVisible)
+        .navigationDestination(
+            item: self.$store.scope(
+                state: \.destination?.guideSteps,
+                action: \.destination.guideSteps
+            )
+        ) { store in
+            GuideStepsView(store: store)
+                .navigationTitle("Steps")
+                .navigationBarTitleDisplayMode(.inline)
+                .hideTabBar(true)
+        }
+        .sheet(
+            item: self.$store.scope(
+                state: \.destination?.chat,
+                action: \.destination.chat
+            )
+        ) { store in
+            NavigationStack {
+                ChatView(store: store)
+                    .navigationTitle("Chat")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .hideTabBar(true)
+            }
+        }
         .onFirstAppear {
             send(.onFirstAppear)
         }

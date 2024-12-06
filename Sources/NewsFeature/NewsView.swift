@@ -35,7 +35,7 @@ public struct NewsView: View {
             NewsDetailView(store: store)
                 .navigationTitle("News Details")
                 .navigationBarTitleDisplayMode(.inline)
-                .hideTabBar()
+                .hideTabBar(true)
         }
         .onAppear {
             send(.onAppear)
