@@ -214,7 +214,7 @@ public struct CustomTabBar<T: TabItem, Style: TabBarColorStyle>: View {
     @Namespace private var namespace
 
     public var body: some View {
-        HStack(spacing: self.style.itemSpacing) {
+        HStack(spacing: self.config.itemSpacing) {
             ForEach(self.items, id: \.self) { item in
                 TabBarButton(
                     item: item,
