@@ -35,7 +35,7 @@ public protocol TabBarColorStyle {
 }
 
 public struct DefaultTabBarStyle: TabBarColorStyle {
-    public var background: some ShapeStyle { Color(.systemBackground).shadow(.drop(radius: 10, y: 5)) }
+    public var background: some ShapeStyle { Color(.secondarySystemBackground).shadow(.drop(radius: 10, y: 5)) }
     public var selected: Color { .accentColor }
     public var foreground: Color { .primary }
     public var selectedForeground: Color { .white }

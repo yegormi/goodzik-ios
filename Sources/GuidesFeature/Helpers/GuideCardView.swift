@@ -17,7 +17,8 @@ public struct GuideCardView: View {
                 Spacer()
 
                 Text(self.guide.date, format: self.dateStyle)
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.system(size: 14))
+                    .foregroundStyle(.secondary)
             }
 
             Text(self.guide.description)
@@ -44,7 +45,7 @@ public struct GuideCardView: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white)
+                .fill(Color(uiColor: .systemBackground))
                 .shadow(color: Color.black.opacity(0.1), radius: 8, y: 5)
         )
     }

@@ -61,7 +61,6 @@ struct GoodzikApp: App {
         WindowGroup {
             AppView(store: self.store)
                 .scrollIndicators(.never)
-                .preferredColorScheme(.light)
         }
     }
 }

@@ -20,7 +20,7 @@ public struct NewsCardView: View {
                     Text(self.item.author)
                         .font(.system(size: 18, weight: .semibold))
 
-                    Text(self.item.date.formatted(date: .numeric, time: .omitted))
+                    Text(self.item.date, format: self.dateStyle)
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                 }
@@ -41,7 +41,7 @@ public struct NewsCardView: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
+                .fill(Color(uiColor: .systemBackground))
                 .shadow(color: .black.opacity(0.1), radius: 8, y: 5)
         )
     }
@@ -61,5 +61,9 @@ public struct NewsCardView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var dateStyle: Date.FormatStyle {
+        .dateTime.day(.twoDigits).month(.twoDigits).year(.extended())
     }
 }

@@ -71,8 +71,11 @@ public struct GuideStepsView: View {
         .frame(maxWidth: .infinity)
         .background {
             RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(Color(uiColor: .secondarySystemGroupedBackground).opacity(0.8))
-                .shadow(color: Color.black.opacity(0.1), radius: 5)
+                .fill(
+                    Color(uiColor: .secondarySystemGroupedBackground)
+                        .opacity(0.8)
+                        .shadow(.drop(radius: 10, y: 5))
+                )
         }
     }
 }
