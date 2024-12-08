@@ -8,6 +8,34 @@ import SwiftHelpers
 import SwiftUI
 import SwiftUIHelpers
 
+extension Tabs.State.Tab: TabItem {
+    public var title: String {
+        switch self {
+        case .news:
+            "News"
+        case .guides:
+            "Guides"
+        case .account:
+            "Account"
+        case .donate:
+            "Donate"
+        }
+    }
+
+    public var icon: Image {
+        switch self {
+        case .news:
+            Image(.newsTab)
+        case .guides:
+            Image(.guidesTab)
+        case .account:
+            Image(.accountTab)
+        case .donate:
+            Image(.donateTab)
+        }
+    }
+}
+
 @ViewAction(for: Tabs.self)
 public struct TabsView: View {
     @Bindable public var store: StoreOf<Tabs>
@@ -16,15 +44,8 @@ public struct TabsView: View {
         self.store = store
     }
 
-    private let tabs: [TabBarItem] = [
-        .init(tab: Tabs.State.Tab.news, title: "News", resource: .newsTab),
-        .init(tab: Tabs.State.Tab.guides, title: "Guides", resource: .guidesTab),
-        .init(tab: Tabs.State.Tab.account, title: "Account", resource: .accountTab),
-        .init(tab: Tabs.State.Tab.donate, title: "Donate", resource: .donateTab),
-    ]
-
     public var body: some View {
-        CustomTabViewContainerExtra(tabs: self.tabs, selectedTab: self.$store.tab) {
+        CustomTabContainerUniversal(items: [.news, .guides, .account, .donate], selection: self.$store.tab, style: .default) {
             NavigationStack {
                 GuidesView(
                     store: self.store.scope(state: \.guides, action: \.guides)
