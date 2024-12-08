@@ -22,32 +22,50 @@ public protocol TabItem: Hashable {
 // MARK: - Styling
 
 public protocol TabBarColorStyle {
-    associatedtype Background: ShapeStyle
-    associatedtype Selected: ShapeStyle
-    associatedtype Foreground: ShapeStyle
-    associatedtype ItemShape: Shape
+    associatedtype ContainerBackground: ShapeStyle
+    associatedtype SelectedItemBackground: ShapeStyle
+    associatedtype SelectedItem: Shape
+    associatedtype ItemForeground: ShapeStyle
+    associatedtype Container: Shape
 
-    var background: Background { get }
-    var selected: Selected { get }
-    var foreground: Foreground { get }
-    var selectedForeground: Foreground { get }
-    var itemShape: ItemShape { get }
+    // Container properties
+    var containerBackgroundColor: ContainerBackground { get }
+    var containerShape: Container { get }
+
+    // Selected item properties
+    var selectedItemBackgroundColor: SelectedItemBackground { get }
+    var selectedItemForegroundColor: ItemForeground { get }
+    var selectedItemShape: SelectedItem { get }
+
+    // Unselected item properties
+    var unselectedItemForegroundColor: ItemForeground { get }
 }
 
 public struct DefaultTabBarStyle: TabBarColorStyle {
-    public var background: some ShapeStyle { Color(.secondarySystemBackground).shadow(.drop(radius: 10, y: 5)) }
-    public var selected: Color { .accentColor }
-    public var foreground: Color { .primary }
-    public var selectedForeground: Color { .white }
-    public var itemShape: RoundedRectangle { RoundedRectangle(cornerRadius: 50) }
+    // Container properties
+    public var containerBackgroundColor: some ShapeStyle {
+        Color(.secondarySystemBackground).shadow(.drop(radius: 10, y: 5))
+    }
+
+    public var containerShape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: 50)
+    }
+
+    // Selected item properties
+    public var selectedItemBackgroundColor: Color { .accentColor }
+    public var selectedItemForegroundColor: Color { .white }
+    public var selectedItemShape: Circle { Circle() }
+
+    // Unselected item properties
+    public var unselectedItemForegroundColor: Color { .primary }
 
     public init() {}
 }
 
-public struct TabBarStyle<ColorStyle: TabBarColorStyle> {
-    public typealias Default = TabBarStyle<DefaultTabBarStyle>
+public struct TabBarConfig<ColorStyle: TabBarColorStyle> {
+    public typealias Default = TabBarConfig<DefaultTabBarStyle>
 
-    let colorStyle: ColorStyle
+    let style: ColorStyle
     let buttonSize: CGFloat
     let iconSize: CGFloat
     let spacing: CGFloat
@@ -60,8 +78,12 @@ public struct TabBarStyle<ColorStyle: TabBarColorStyle> {
     let selectionAnimation: Animation
     let visibilityAnimation: Animation
 
+    var iconPadding: CGFloat {
+        (self.buttonSize - self.iconSize) / 2
+    }
+
     private init(
-        colorStyle: ColorStyle,
+        style: ColorStyle,
         buttonSize: CGFloat,
         iconSize: CGFloat,
         spacing: CGFloat,
@@ -74,7 +96,7 @@ public struct TabBarStyle<ColorStyle: TabBarColorStyle> {
         selectionAnimation: Animation,
         visibilityAnimation: Animation
     ) {
-        self.colorStyle = colorStyle
+        self.style = style
         self.buttonSize = buttonSize
         self.iconSize = iconSize
         self.spacing = spacing
@@ -90,7 +112,7 @@ public struct TabBarStyle<ColorStyle: TabBarColorStyle> {
 
     public static var `default`: Default {
         Default(
-            colorStyle: DefaultTabBarStyle(),
+            style: DefaultTabBarStyle(),
             buttonSize: 50,
             iconSize: 20,
             spacing: 8,
@@ -143,15 +165,16 @@ struct TabBarButton<T: TabItem, Style: TabBarColorStyle>: View {
     let isSelected: Bool
     let namespace: Namespace.ID
     let action: () -> Void
-    let style: TabBarStyle<Style>
+    let config: TabBarConfig<Style>
 
     var body: some View {
         Button(action: self.action) {
-            VStack(spacing: self.style.spacing) {
+            VStack(spacing: self.config.spacing) {
                 ZStack {
                     if self.isSelected {
-                        self.style.colorStyle.itemShape
-                            .fill(self.style.colorStyle.selected)
+                        self.config.style.selectedItemShape
+                            .fill(self.config.style.selectedItemBackgroundColor)
+                            .frame(maxWidth: self.config.buttonSize, maxHeight: self.config.buttonSize)
                             .matchedGeometryEffect(id: "background", in: self.namespace)
                     }
 
@@ -159,22 +182,23 @@ struct TabBarButton<T: TabItem, Style: TabBarColorStyle>: View {
                         self.item.icon
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: self.style.iconSize, height: self.style.iconSize)
+                            .frame(maxWidth: self.config.iconSize, maxHeight: self.config.iconSize)
+                            .padding(self.config.iconPadding)
+                            .contentShape(Rectangle())
                             .foregroundStyle(
-                                self.isSelected ? self.style.colorStyle.selectedForeground : self.style.colorStyle
-                                    .foreground
+                                self.isSelected ? self.config.style.selectedItemForegroundColor : self.config.style
+                                    .unselectedItemForegroundColor
                             )
-                        if self.style.showLabels {
+                        if self.config.showLabels {
                             Text(self.item.title)
-                                .font(self.style.labelFont)
+                                .font(self.config.labelFont)
                                 .foregroundStyle(
-                                    self.isSelected ? self.style.colorStyle.selectedForeground : self.style.colorStyle
-                                        .foreground
+                                    self.isSelected ? self.config.style.selectedItemForegroundColor : self.config.style
+                                        .unselectedItemForegroundColor
                                 )
                         }
                     }
                 }
-                .frame(width: self.style.buttonSize, height: self.style.buttonSize)
             }
         }
         .buttonStyle(.plain)
@@ -185,7 +209,7 @@ public struct CustomTabBar<T: TabItem, Style: TabBarColorStyle>: View {
     let items: [T]
     let selection: T
     let onSelect: (T) -> Void
-    let style: TabBarStyle<Style>
+    let config: TabBarConfig<Style>
 
     @Namespace private var namespace
 
@@ -197,14 +221,14 @@ public struct CustomTabBar<T: TabItem, Style: TabBarColorStyle>: View {
                     isSelected: item == self.selection,
                     namespace: self.namespace,
                     action: { self.onSelect(item) },
-                    style: self.style
+                    config: self.config
                 )
             }
         }
-        .padding(self.style.padding)
+        .padding(self.config.padding)
         .background {
-            self.style.colorStyle.itemShape
-                .fill(self.style.colorStyle.background)
+            self.config.style.containerShape
+                .fill(self.config.style.containerBackgroundColor)
         }
     }
 }
@@ -213,19 +237,19 @@ public struct CustomTabContainerUniversal<T: TabItem, Style: TabBarColorStyle, C
     let items: [T]
     @Binding var selection: T
     let content: () -> Content
-    let style: TabBarStyle<Style>
+    let config: TabBarConfig<Style>
 
     @State private var controller = TabBarController()
 
     public init(
         items: [T],
         selection: Binding<T>,
-        style: TabBarStyle<Style>,
+        config: TabBarConfig<Style>,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.items = items
         self._selection = selection
-        self.style = style
+        self.config = config
         self.content = content
     }
 
@@ -243,18 +267,18 @@ public struct CustomTabContainerUniversal<T: TabItem, Style: TabBarColorStyle, C
                 items: self.items,
                 selection: self.selection,
                 onSelect: { tab in
-                    withAnimation(self.style.selectionAnimation) {
+                    withAnimation(self.config.selectionAnimation) {
                         self.selection = tab
                     }
                 },
-                style: self.style
+                config: self.config
             )
-            .padding(.horizontal, self.style.containerPadding)
-            .safeAreaPadding(.bottom, self.style.bottomPadding)
+            .padding(.horizontal, self.config.containerPadding)
+            .safeAreaPadding(.bottom, self.config.bottomPadding)
             .opacity(self.controller.visibility.isVisible ? 1 : 0)
             .offset(y: self.controller.visibility.isVisible ? 0 : 100)
         }
-        .animation(self.style.visibilityAnimation, value: self.controller.visibility)
+        .animation(self.config.visibilityAnimation, value: self.controller.visibility)
         .ignoresSafeArea(edges: .bottom)
         .environment(\.tabBarController, self.controller)
     }

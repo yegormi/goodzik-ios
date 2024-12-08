@@ -45,7 +45,7 @@ public struct TabsView: View {
     }
 
     public var body: some View {
-        CustomTabContainerUniversal(items: [.news, .guides, .account, .donate], selection: self.$store.tab, style: .default) {
+        CustomTabContainerUniversal(items: [.news, .guides, .account, .donate], selection: self.$store.tab, config: .default) {
             NavigationStack {
                 GuidesView(
                     store: self.store.scope(state: \.guides, action: \.guides)
