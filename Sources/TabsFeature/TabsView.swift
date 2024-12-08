@@ -8,8 +8,8 @@ import SwiftHelpers
 import SwiftUI
 import SwiftUIHelpers
 
-extension Tabs.State.Tab: TabItem {
-    public var title: String {
+extension Tabs.State.Tab: TabBarItem {
+    public var title: LocalizedStringKey {
         switch self {
         case .news:
             "News"
@@ -45,7 +45,7 @@ public struct TabsView: View {
     }
 
     public var body: some View {
-        CustomTabContainerUniversal(items: [.news, .guides, .account, .donate], selection: self.$store.tab, config: .default) {
+        TabBarContainer(items: [.news, .guides, .account, .donate], selection: self.$store.tab, config: .default) {
             NavigationStack {
                 GuidesView(
                     store: self.store.scope(state: \.guides, action: \.guides)

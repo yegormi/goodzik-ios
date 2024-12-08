@@ -150,7 +150,7 @@ public struct GuideDetailView: View {
             GuideStepsView(store: store)
                 .navigationTitle("Steps")
                 .navigationBarTitleDisplayMode(.inline)
-                .tabBarVisibility(.hidden)
+                .tabBarVisibility(false)
         }
         .sheet(
             item: self.$store.scope(
@@ -162,7 +162,7 @@ public struct GuideDetailView: View {
                 ChatView(store: store)
                     .navigationTitle("Chat")
                     .navigationBarTitleDisplayMode(.inline)
-                    .tabBarVisibility(.hidden)
+                    .tabBarVisibility(false)
             }
         }
         .onFirstAppear {
