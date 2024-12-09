@@ -26,6 +26,7 @@ public struct NewsFeature: Reducer, Sendable {
 
         public enum View: Equatable, BindableAction {
             case binding(BindingAction<NewsFeature.State>)
+            case onFirstAppear
             case onAppear
             case newsItemTapped(NewsItem)
         }
@@ -66,8 +67,11 @@ public struct NewsFeature: Reducer, Sendable {
             case .view(.binding):
                 return .none
 
-            case .view(.onAppear):
+            case .view(.onFirstAppear):
                 return self.fetchNews(&state)
+
+            case .view(.onAppear):
+                return .none
 
             case let .view(.newsItemTapped(item)):
                 state.destination = .newsDetail(NewsDetail.State(item: item))

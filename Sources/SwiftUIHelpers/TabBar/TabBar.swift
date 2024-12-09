@@ -23,7 +23,7 @@ private struct TabBarBadge: View {
     }
 }
 
-private struct TabBarItemView<Item: TabBarItem, Theme: TabBarTheme>: View {
+private struct TabBarButton<Item: TabBarItem, Theme: TabBarTheme>: View {
     private let item: Item
     private let isSelected: Bool
     private let namespace: Namespace.ID
@@ -54,6 +54,7 @@ private struct TabBarItemView<Item: TabBarItem, Theme: TabBarTheme>: View {
                     self.config.theme.activeItemShape
                         .fill(self.config.theme.activeItemBackgroundColor)
                         .frame(width: self.config.layout.itemSize.width, height: self.config.layout.itemSize.height)
+                        .transition(.symbolEffect)
                         .matchedGeometryEffect(id: "background", in: self.namespace)
                 }
 
@@ -105,7 +106,7 @@ private struct CustomTabBar<Item: TabBarItem, Theme: TabBarTheme>: View {
     var body: some View {
         HStack(spacing: self.config.layout.itemSpacing) {
             ForEach(self.items) { item in
-                TabBarItemView(
+                TabBarButton(
                     item: item,
                     isSelected: item == self.selection,
                     namespace: self.namespace,

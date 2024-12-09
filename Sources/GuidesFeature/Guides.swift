@@ -69,10 +69,10 @@ public struct Guides: Reducer, Sendable {
                 return .none
 
             case .view(.onFirstAppear):
-                return .none
+                return self.fetchGuides()
 
             case .view(.onAppear):
-                return self.fetchGuides()
+                return .none
 
             case let .view(.guideTapped(guide)):
                 state.destination = .guideDetail(GuideDetail.State(guide: guide))

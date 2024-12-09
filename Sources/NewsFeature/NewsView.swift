@@ -43,6 +43,9 @@ public struct NewsView: View {
         .onAppear {
             send(.onAppear)
         }
+        .onFirstAppear {
+            send(.onFirstAppear)
+        }
     }
 }
 
