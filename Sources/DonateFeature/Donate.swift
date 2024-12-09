@@ -61,6 +61,7 @@ public struct Donate: Reducer, Sendable {
             case .internal(.cardNumberCopied):
                 state.copiedCardNumber = true
                 return .run { send in
+                    await UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     try await self.clock.sleep(for: .seconds(1))
                     await send(.internal(.clearCopiedStatus))
                 }
