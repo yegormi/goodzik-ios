@@ -25,8 +25,13 @@ public struct GuidesView: View {
                         }
                         .buttonStyle(.plain)
                     }
+                } else {
+                    self.emptyContent
                 }
             }
+        }
+        .refreshable {
+            send(.onRefresh)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentMargins(.all, 20, for: .scrollContent)
@@ -47,6 +52,27 @@ public struct GuidesView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .tabBarVisibility(false)
         }
+    }
+
+    private var emptyContent: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "rectangle.grid.2x2")
+                .resizable()
+                .frame(width: 50, height: 50)
+                .foregroundStyle(Color.textPrimary)
+
+            VStack(spacing: 8) {
+                Text("No Guides yet")
+                    .foregroundColor(.textPrimary)
+                    .font(.system(size: 20))
+                    .bold()
+
+                Text("No guides yet, please check back later.")
+                    .foregroundColor(.secondary)
+                    .font(.system(size: 15))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

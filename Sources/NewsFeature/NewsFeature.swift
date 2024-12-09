@@ -28,6 +28,7 @@ public struct NewsFeature: Reducer, Sendable {
             case binding(BindingAction<NewsFeature.State>)
             case onFirstAppear
             case onAppear
+            case onRefresh
             case newsItemTapped(NewsItem)
         }
     }
@@ -72,6 +73,9 @@ public struct NewsFeature: Reducer, Sendable {
 
             case .view(.onAppear):
                 return .none
+
+            case .view(.onRefresh):
+                return self.fetchNews(&state)
 
             case let .view(.newsItemTapped(item)):
                 state.destination = .newsDetail(NewsDetail.State(item: item))

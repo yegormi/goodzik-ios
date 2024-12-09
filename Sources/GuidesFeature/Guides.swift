@@ -29,6 +29,7 @@ public struct Guides: Reducer, Sendable {
             case binding(BindingAction<Guides.State>)
             case onFirstAppear
             case onAppear
+            case onRefresh
             case guideTapped(Guide)
         }
     }
@@ -73,6 +74,9 @@ public struct Guides: Reducer, Sendable {
 
             case .view(.onAppear):
                 return .none
+
+            case .view(.onRefresh):
+                return self.fetchGuides()
 
             case let .view(.guideTapped(guide)):
                 state.destination = .guideDetail(GuideDetail.State(guide: guide))

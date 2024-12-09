@@ -110,7 +110,7 @@ extension LoggingMiddleware {
     }
 
     private func logRequestFailure(_: HTTPRequest, error: any Error) {
-        self.logger.warning("Request failed. Error: \(error.localizedDescription)")
+        self.logger.warning("Request failed. Error: \(error.localizedDescription.debugDescription)")
     }
 }
 
